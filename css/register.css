@@ -1,0 +1,69 @@
+@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
+body {
+    background: linear-gradient(to right, #1f4037, #99f2c8);/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+*/
+    background: -webkit-linear-gradient(to right, #99f2c8, #1f4037);  /*Chrome 10-25, Safari 5.1-6*/
+    float: left;
+    width: 100%;
+    padding: 2.3% 0;
+    height: 100%;
+}
+
+.title {
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    font-family: Khmer OS Muol;
+}
+
+h2 {    
+    font-weight: 800;
+    font-size: 30px;
+    color: 	#2E8B57;
+}
+h2:after {
+    content: " ";
+    width: 100px;
+    height: 5px;
+    background: rgb(226, 104, 33);
+    display: block;
+    margin-top: 20px;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.info {
+    font-family: Khmer OS Siemreap;
+}
+
+.btn-register {
+    background: #28A745;
+    color: #fff;
+    font-weight: 600;
+    width: 30%;
+    font-family: Khmer OS Siemreap;
+    float: right;
+    width: 50%;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.btn-register:hover {
+    color: black;
+}
+.btn-thanks{
+    background: #28A745;
+    color: #fff;
+    font-weight: 600;
+    width: 30%;
+    font-family: Khmer OS Siemreap;
+    float: right;
+    width: 50%;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+

@@ -1,0 +1,131 @@
+@font-face {
+    font-family: "KhmerOSbattambang";
+    src: url("../fonts/KhmerOSbattambang.eot"); /* IE9 Compat Modes */
+    src: url("../fonts/KhmerOSbattambang.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+      url("../fonts/KhmerOSbattambang.otf") format("opentype"), /* Open Type Font */
+      url("../fonts/KhmerOSbattambang.svg") format("svg"), /* Legacy iOS */
+      url("../fonts/KhmerOSbattambang.ttf") format("truetype"), /* Safari, Android, iOS */
+      url("../fonts/KhmerOSbattambang.woff") format("woff"), /* Modern Browsers */
+      url("../fonts/KhmerOSbattambang.woff2") format("woff2"); /* Modern Browsers */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "KhmerRotanakTraiyB";
+    src: url("../fonts/KhmerRotanakTraiyB.eot"); /* IE9 Compat Modes */
+    src: url("../fonts/KhmerRotanakTraiyB.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+      url("../fonts/KhmerRotanakTraiyB.otf") format("opentype"), /* Open Type Font */
+      url("../fonts/KhmerRotanakTraiyB.svg") format("svg"), /* Legacy iOS */
+      url("../fonts/KhmerRotanakTraiyB.ttf") format("truetype"), /* Safari, Android, iOS */
+      url("../fonts/KhmerRotanakTraiyB.woff") format("woff"), /* Modern Browsers */
+      url("../fonts/KhmerRotanakTraiyB.woff2") format("woff2"); /* Modern Browsers */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Romnea-Italic";
+    src: url("../fonts/Romnea-Italic.eot"); /* IE9 Compat Modes */
+    src: url("../fonts/Romnea-Italic.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+      url("../fonts/Romnea-Italic.otf") format("opentype"), /* Open Type Font */
+      url("../fonts/Romnea-Italic.svg") format("svg"), /* Legacy iOS */
+      url("../fonts/Romnea-Italic.ttf") format("truetype"), /* Safari, Android, iOS */
+      url("../fonts/Romnea-Italic.woff") format("woff"), /* Modern Browsers */
+      url("./fonts/Romnea-Italic.woff2") format("woff2"); /* Modern Browsers */
+    font-weight: normal;
+    font-style: normal;
+  }
+  .big{
+    /* background: -webkit-linear-gradient(to right,  #007991, #78ffd6);
+    background: linear-gradient(to right, #007991, #78ffd6); */
+    padding-top: 70px;
+    padding-bottom: 50px;
+}
+  .card-header h4, h1, h2, h3, h4, h5, h6{
+      font-family: "Romnea-Italic";
+  }
+      .searchme , p,a, label, span, button, li, option, th,td{
+          font-family: "KhmerOSbattambang";
+      }
+      button{
+          font-family: "Khmer OS Battambang";
+      }
+      .gallery{
+          width: 150px;
+          height: 120px;
+          border: 1px solid black;
+          text-align: center;
+         
+      }
+
+      .gallery img{
+          padding-top: 10px;
+      }
+      .gallery:hover{
+        /* image-resolution: ; */
+        background-color: #b1ffb1;
+        color: black;
+      }
+      /* card style */
+      .foodcard{
+          text-align: center;
+      }
+      .foodcard h6{
+          margin-top:14px;
+          font-size: 15px;
+      }
+
+      .foodcard img:hover{
+          transform: scaleX(-1);
+      }
+      .card{
+          border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+      }
+      .card-header p{
+          font-family: "Khmer OS Battambang";
+      }
+      .left img{
+          width: 100%;
+          height: 100%;
+      }
+      .advertise img{
+          width: 100%;
+          padding-left: 30px;
+        margin-bottom: 10px;
+      }
+      /* end-card-style */
+
+      .social i{
+          font-size: 30px;
+          color: whitesmoke;
+      }
+
+      .social i:hover{
+        color: orange;
+        background: #043927;
+        font-size: 50px;
+    }
+      .footerme h5{
+          margin-bottom: 30px;
+      }
+
+
+/* menu-style */
+.ab a:hover{
+  background: gray;
+  color: black;
+}
+
+/* end menu style */
+/* 
+.food-div{
+  width: 100%;
+  height: 100%;
+} */
+.food-div img{
+  width: 100%;
+  height: 100%;
+}
