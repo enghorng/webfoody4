@@ -1,18 +1,34 @@
+<?php
+    //connect to database
+    include '../php/connectToDb.php';
+    $obj = new DB();
+    $con = $obj->conDb();
+    $con->query('SET character_set_results=utf8');
+
+    //Disply User Name
+    $sql = $con->query("SELECT * FROM `tblcheckrole` WHERE id = 1");    
+    $roleSql = $sql->fetch_assoc();
+    $role = $roleSql["Role"];
+    $name = $roleSql["FirstName"];
+    $usercode = $roleSql["UserCode"];
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/aboutstyle.css">
-    <link rel="stylesheet" href="../css/create-account-style.css">
-    <link rel="stylesheet" href="../css/index_style.css">
-    <link rel="stylesheet" href="../css/backToTop.css">
-    <link rel="stylesheet" href="../css/foodstyle.css">
-    <link rel="stylesheet" href="../css/sidenav.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/aboutstyle.css">
+  <link rel="stylesheet" href="../css/index_style.css">
+  <link rel="stylesheet" href="../css/backToTop.css">
+  <link rel="stylesheet" href="../css/foodstyle.css">
+  <link rel="stylesheet" href="../css/sidenav.css">
+  <link rel="stylesheet" href="../css/food-detail-style.css">
+  <link rel="stylesheet" href="../css/add-food-style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -21,67 +37,125 @@
   <!-- link for media -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <!-- end link for media -->
 
-  
 </head>
 <script src="../js/backToTop.js"></script>
 <script src="../js/sidenav.js"></script>
+<script src="../js/add-food.js"></script>
 <style>
-    button{
-          font-family: "Khmer OS Battambang";
-          background-color: #FB8442;
-      }
-</style>
-<body>
-    <!-- Menu-bar -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
-        <a class="navbar-brand" href="#">
-            <img src="../images/foodlogo.png" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+  button {
+    font-family: "Khmer OS Battambang";
+    background-color: #FB8442;
+  }
 
-            <!-- <li class="nav-item active">
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  select {
+    background-color: #222;
+    color: white;
+  }
+</style>
+
+<body>
+  <!-- Menu-bar -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
+    <a class="navbar-brand" href="../index.php">
+      <img src="../images/Icon/foodlogo.png" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+      style="background-color: white">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <!-- <li class="nav-item active">
               <a class="nav-link text-white" href="#">អាហារខ្មែរ<span class="sr-only">(current)</span></a>
             </li> -->
 
-            <li class="nav-item dropdown ab">
-                <a class=" text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"​>
-                មឺនុយ
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="../index.html">ទំព័រដើម</a>
-                    <a class="dropdown-item" href="about.html">អំពីពួកយើង</a>
-                    <a class="dropdown-item" href="#">ទំនាក់ទំនង</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="food.html">ម្ហូប</a>
-                  <a class="dropdown-item" href="sweet.html">បង្អែម</a>
-                  <a class="dropdown-item" href="drink.html">ភេសជ្ជ:</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="add-food.html">បន្ថែមមុខម្ហូប</a>
-                    <a class="dropdown-item" href="#">រដ្ឋបាល</a>
-                </div>
-              </li>
-            <li class="nav-item ab">
-              <a class="nav-link text-white" href="#">ចូលប្រើ</a>
-            </li>
-
-            <li class="nav-item ab">
-                <a class="nav-link text-white" href="#">ចុះឈ្មោះ</a>
-            </li>
-            
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-          </form>
-        </div>
-      </nav>
+        <li class="nav-item dropdown ab">
+          <a class=" text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ​>
+            មឺនុយ
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="../index.php">ទំព័រដើម</a>
+            <a class="dropdown-item" href="about.php">អំពីពួកយើង</a>
+            <a class="dropdown-item" href="#">ទំនាក់ទំនង</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="food.php">ម្ហូប</a>
+            <a class="dropdown-item" href="sweet.php">បង្អែម</a>
+            <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
+            <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+            <?php  
+                      if($role==0){
+                          echo '<script type="text/javascript">
+                              $("#dropdownAdd").css("display","none");
+                              $("#dropdownAdmin").css("display","none");
+                              </script>';                                
+                      }                            
+                      if($role==1){
+                          echo '<script type="text/javascript">
+                            $("#dropdownAdd").css("display", "block");
+                          </script>';
+                      }                              
+                      if($role==2){
+                          echo '<script type="text/javascript">
+                            $("#dropdownAdd").css("display", "block");
+                            $("#dropdownAdmin").css("display", "block");
+                          </script>';
+                      }
+                  ?>
+          </div>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="login.php" id="navLogin">ចូលប្រើ</a>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="register.php" id="navRegister">ចុះឈ្មោះ</a>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="login.php" id="navLogout">ចាកចេញ</a>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="login.php" id="navUser">អ្នកប្រើប្រាស់</a>
+        </li>
+        <?php
+                    if($role==0){
+                        echo '<script type="text/javascript">
+                              $("#navLogin").css("display","block");
+                              $("#navRegister").css("display","block");
+                              </script>';
+                    }   
+                    else{
+                        echo '<script type="text/javascript">
+                          $("#navLogout").css("display", "block");
+                          $("#navUser").css("display", "block");
+                          $("#navUser").text("'.$name.'");
+                        </script>';
+                    }           
+                ?>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
+      </form>
+    </div>
+  </nav>
       <!-- End Menu -->
 
     <!-- Food-Body -->
@@ -100,15 +174,15 @@
                                 </li>
                                 <div class="dropdown-divider"></div>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../html/user-info.html" ><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
+                                    <a class="nav-link" href="user-info.php" ><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
                                 </li>
                             </ul>
                         </div>
                 </li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-food.html">ម្ហូប</a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="admin-food.php">ម្ហូប</a></li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-request.html">ការស្នើសុំ</a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="admin-request.php">ការស្នើសុំ</a></li>
                 <div class="dropdown-divider"></div>
             </ul>
         </div>
