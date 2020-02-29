@@ -87,8 +87,8 @@
                   <a class="dropdown-item" href="sweet.php">បង្អែម</a>
                   <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item display-none" href="#" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
-                  <a class="dropdown-item display-none" href="#" id="dropdownAdmin">រដ្ឋបាល</a>
+                  <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
+                  <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
                   <?php  
                       if($role==0){
                           echo '<script type="text/javascript">

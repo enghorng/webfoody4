@@ -1,20 +1,37 @@
+<?php
+    //connect to database
+    include '../php/connectToDb.php';
+    $obj = new DB();
+    $con = $obj->conDb();
+    $con->query('SET character_set_results=utf8');
+
+    //Disply User Name
+    $sql = $con->query("SELECT * FROM `tblcheckrole` WHERE id = 1");    
+    $roleSql = $sql->fetch_assoc();
+    $role = $roleSql["Role"];
+    $name = $roleSql["FirstName"];
+    $usercode = $roleSql["UserCode"];
+
+    //Select All User
+    $userSql = $con->query("SELECT * FROM `tbluser` WHERE Status != 0");    
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/aboutstyle.css">
-    <link rel="stylesheet" href="../css/user-info-style.css">
-    <link rel="stylesheet" href="../js/user-alert.js">
-    <link rel="stylesheet" href="../css/create-account-style.css">
-    <link rel="stylesheet" href="../css/index_style.css">
-    <link rel="stylesheet" href="../css/backToTop.css">
-    <link rel="stylesheet" href="../css/foodstyle.css">
-    <link rel="stylesheet" href="../css/sidenav.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../css/aboutstyle.css">
+  <link rel="stylesheet" href="../css/index_style.css">
+  <link rel="stylesheet" href="../css/backToTop.css">
+  <link rel="stylesheet" href="../css/foodstyle.css">
+  <link rel="stylesheet" href="../css/sidenav.css">
+  <link rel="stylesheet" href="../css/food-detail-style.css">
+  <link rel="stylesheet" href="../css/add-food-style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -23,67 +40,125 @@
   <!-- link for media -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <!-- end link for media -->
 
-  
 </head>
 <script src="../js/backToTop.js"></script>
 <script src="../js/sidenav.js"></script>
+<script src="../js/add-food.js"></script>
 <style>
-    button{
-          font-family: "Khmer OS Battambang";
-          background-color: #FB8442;
-      }
-</style>
-<body>
-    <!-- Menu-bar -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
-        <a class="navbar-brand" href="#">
-            <img src="../images/foodlogo.png" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+  button {
+    font-family: "Khmer OS Battambang";
+    background-color: #FB8442;
+  }
 
-            <!-- <li class="nav-item active">
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  select {
+    background-color: #222;
+    color: white;
+  }
+</style>
+
+<body>
+  <!-- Menu-bar -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
+    <a class="navbar-brand" href="../index.php">
+      <img src="../images/Icon/foodlogo.png" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+      style="background-color: white">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <!-- <li class="nav-item active">
               <a class="nav-link text-white" href="#">អាហារខ្មែរ<span class="sr-only">(current)</span></a>
             </li> -->
 
-            <li class="nav-item dropdown ab">
-                <a class=" text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"​>
-                មឺនុយ
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="../index.html">ទំព័រដើម</a>
-                    <a class="dropdown-item" href="about.html">អំពីពួកយើង</a>
-                    <a class="dropdown-item" href="#">ទំនាក់ទំនង</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="food.html">ម្ហូប</a>
-                  <a class="dropdown-item" href="sweet.html">បង្អែម</a>
-                  <a class="dropdown-item" href="drink.html">ភេសជ្ជ:</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="add-food.html">បន្ថែមមុខម្ហូប</a>
-                    <a class="dropdown-item" href="#">រដ្ឋបាល</a>
-                </div>
-              </li>
-            <li class="nav-item ab">
-              <a class="nav-link text-white" href="#">ចូលប្រើ</a>
-            </li>
-
-            <li class="nav-item ab">
-                <a class="nav-link text-white" href="#">ចុះឈ្មោះ</a>
-            </li>
-            
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-          </form>
-        </div>
-      </nav>
+        <li class="nav-item dropdown ab">
+          <a class=" text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ​>
+            មឺនុយ
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="../index.php">ទំព័រដើម</a>
+            <a class="dropdown-item" href="about.php">អំពីពួកយើង</a>
+            <a class="dropdown-item" href="#">ទំនាក់ទំនង</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="food.php">ម្ហូប</a>
+            <a class="dropdown-item" href="sweet.php">បង្អែម</a>
+            <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
+            <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+            <?php  
+                      if($role==0){
+                          echo '<script type="text/javascript">
+                              $("#dropdownAdd").css("display","none");
+                              $("#dropdownAdmin").css("display","none");
+                              </script>';                                
+                      }                            
+                      if($role==1){
+                          echo '<script type="text/javascript">
+                            $("#dropdownAdd").css("display", "block");
+                          </script>';
+                      }                              
+                      if($role==2){
+                          echo '<script type="text/javascript">
+                            $("#dropdownAdd").css("display", "block");
+                            $("#dropdownAdmin").css("display", "block");
+                          </script>';
+                      }
+                  ?>
+          </div>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="login.php" id="navLogin">ចូលប្រើ</a>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="register.php" id="navRegister">ចុះឈ្មោះ</a>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="login.php" id="navLogout">ចាកចេញ</a>
+        </li>
+        <li class="nav-item ab">
+          <a class="nav-link text-white display-none" href="login.php" id="navUser">អ្នកប្រើប្រាស់</a>
+        </li>
+        <?php
+                    if($role==0){
+                        echo '<script type="text/javascript">
+                              $("#navLogin").css("display","block");
+                              $("#navRegister").css("display","block");
+                              </script>';
+                    }   
+                    else{
+                        echo '<script type="text/javascript">
+                          $("#navLogout").css("display", "block");
+                          $("#navUser").css("display", "block");
+                          $("#navUser").text("'.$name.'");
+                        </script>';
+                    }           
+                ?>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
+      </form>
+    </div>
+  </nav>
       <!-- End Menu -->
 
     <!-- Food-Body -->
@@ -98,7 +173,7 @@
                         <div class="collapse" id="submenu1" aria-expanded="false">
                             <ul class="flex-column pl-2 nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="../html/admin.html"><span>បង្កើតគណនីយថ្មី</span></a>
+                                    <a class="nav-link" href="../html/admin.php"><span>បង្កើតគណនីយថ្មី</span></a>
                                 </li>
                                 <div class="dropdown-divider"></div>
                                 <li class="nav-item">
@@ -108,9 +183,9 @@
                         </div>
                 </li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-food.html">ម្ហូប</a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-food.php">ម្ហូប</a></li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-request.html">ការស្នើសុំ</a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-request.php">ការស្នើសុំ</a></li>
                 <div class="dropdown-divider"></div>
             </ul>
         </div>
@@ -121,7 +196,7 @@
           <form action="">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-right" style="margin-bottom: 10px;">
-                <button type="button" class="btn btn-danger btn-md" style="width: 100px;" disabled>លុប</button>
+                <button type="button" class="btn btn-danger btn-md" id="deleteUser" style="width: 100px;" disabled>លុប</button>
               </div>
             </div>
               <div class="row">
@@ -131,46 +206,97 @@
                       <tr class="thead-light">
                         <th scope="col" style="width: 10%;">#</th>
                         <th scope="col" style="width: 20.5%;">ឈ្មោះ</th>
-                        <th scope="col" style="width: 10%;">ភេទ</th>
-                        <th scope="col" style="width: 30%;">អ៊ីម៉ែល</th>
-                        <th scope="col" style="width: 15%;">លេខទូរស័ព្ទ</th>
-                        <th scope="col"style="width: 15%">កែប្រែ</th>
+                        <th scope="col" style="width: 8%;">ភេទ</th>
+                        <th scope="col" style="width: 25%;">អ៊ីម៉ែល</th>
+                        <th scope="col" style="width: 13%;">លេខទូរស័ព្ទ</th>
+                        <th scope="col" style="width: 11%;">តួនាទី</th>
+                        <th scope="col"style="width: 11%">កែប្រែ</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr style="text-align: center;">
-                        <th scope="row">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="">1
-                            </label>
-                          </div>
-                        </th>
-                        <td><a href="#" data-toggle="modal" data-target="#userModal">រិន សុភារី</a></td>
-                        <td>ស្រី</td>
-                        <td>sophearyrin@gmail.com</td>
-                        <td>081231031</td>
-                        <td>
-                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
-                        </td>
-                      </tr>
-                      <tr style="text-align: center;">
-                        <th scope="row">
-                          <div class="form-check">
-                            <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value="">2
-                            </label>
-                          </div>
-                        </th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
-                        </td>
-                      </tr>
-                    </tbody>
+                    <tbody id="rolechanged">
+                      <?php
+                        $num = 0;
+                        if ($userSql->num_rows > 0) {         
+                          while($user = $userSql->fetch_assoc()){
+                            $num++;
+                            if($user["Role"]==1){
+                              $role = "Member";
+                            }
+                            else{
+                              $role = "Admin";
+                            }
+
+                            if($usercode==$user["UserCode"]){
+                              $colName = $user["LastName"].' '.$user["FirstName"];
+                            }
+                            else{
+                              $colName = '<a href="#m" type="submit" data-toggle="modal" data-target="#userModal" id="'.$user["UserCode"].'" onClick="rolet(this.id)">'.$user["LastName"].''." ".''.$user["FirstName"].'</a>';
+                            }
+                            echo '<tr style="text-align: center;">
+                                    <th scope="row">
+                                      <div class="form-check">
+                                        <label class="form-check-label">
+                                          <input type="checkbox" class="form-check-input" value="" id="chk">'.$num.'
+                                        </label>
+                                      </div>
+                                    </th>                            
+                                    <td>'.$colName.'</td>
+                                    <td>'.$user["Gender"].'</td>
+                                    <td>'.$user["Email"].'</td>
+                                    <td>'.$user["Phone"].'</td>
+                                    <td> '.$role.' </td>
+                                    <td class="display-none" id="img'.$user["UserCode"].'">'.$user["UserImage"].'</td>
+                                    <td class="display-none" id="role'.$user["UserCode"].'">'.$user["Role"].'</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
+                                    </td>
+                                  </tr>';
+                          }
+                        }
+
+                      ?>  
+                      <script>
+                        
+                        var id;
+                        function rolet(d){
+                          id = d;
+                          document.getElementById("popup-name").innerHTML = document.getElementById(d).textContent; 
+                          document.getElementById("popup-image").src = "../images/User/"+document.getElementById('img'+d).textContent;
+                          var r = document.getElementById('role'+d).textContent;
+                          if(r == 1){
+                            var ro = "1";
+                          }
+                          else{
+                            var ro = "0";
+                          }
+                          document.getElementById("popup-role").selectedIndex = ro;
+                        }
+          
+                        $(document).ready(function () {
+                          $("#updateRole").click(function(){
+                            $.ajax({    //create an ajax request to display.php
+                              type: "GET",
+                              url: "../php/changeUserRole.php",             
+                              dataType: "html",  
+                                //expect html to be returned  
+                                data: {code:''+id},         
+                              success: function(data){                    
+                                  $("#rolechanged").html(data); 
+                              }
+                            });
+                          });
+                          $("#chk").click(function(){
+                            $('#deleteUser').prop('disabled', false);
+                          });
+                          $("#chk").unclick(function(){
+                            $('#deleteUser').prop('disabled', true);
+                          });
+                          $("#deleteUser").click(function(){
+
+                            // alert($('input[type="checkbox"]:checked').length);
+                          });
+                        });
+                      </script>
                     <!-- userModel -->
                     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -182,18 +308,18 @@
                               </button>
                             </div>
                             <div class="modal-body" style="text-align: center; padding-top: 30px;">
-                              <img src="../images/Enghorng.png" alt="" class="rounded-circle img-fluid mx-auto d-block" style="width: 200px; height: 200px;">
-                              <h4 style="padding-top: 20px;">លាន អេងហ៊ង</h4>
+                              <img id="popup-image" src="../images/User/Enghorng.png" alt="" class="rounded-circle img-fluid mx-auto d-block" style="width: 200px; height: 200px;">
+                              <h4 style="padding-top: 20px;" id="popup-name"></h4>
                                 <div>
-                                  <select class="form-control mx-auto d-block" style="width: 50%;">
+                                  <select class="form-control mx-auto d-block" style="width: 50%;" id="popup-role">
                                     <option value="Admin">Admin</option>
-                                    <option value="User">User</option>
+                                    <option value="User">Member</option>
                                   </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">បិទ</button>
-                                <button type="button" class="btn btn-primary">កែប្រែ</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" id="updateRole">កែប្រែ</button>
                             </div>
                           </div>
                         </div>
