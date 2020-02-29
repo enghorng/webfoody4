@@ -1,21 +1,21 @@
 $(document).ready(function () {
-    $("#dropdown-catalog").change(function(){
-        var catalog = $("#dropdown-catalog").val();
-        if(catalog == 'Food'){
+    $("#dropdown-category").change(function(){
+        var category = $("#dropdown-category").val();
+        if(category == 'Food'){
             $('#dropdown-type').prop('disabled', false);
             $('#dropdown-type').html('');
             $('#dropdown-type').append(`<option value=""> -- សូមជ្រើសរើស -- </option>`); 
             $('#dropdown-type').append(`<option value="Water">ទឹក  </option>`); 
             $('#dropdown-type').append(`<option value="NoWater"> គោក </option>`); 
         }
-        else if(catalog == 'Sweet'){
+        else if(category == 'Sweet'){
             $('#dropdown-type').prop('disabled', false);
             $('#dropdown-type').html('');
             $('#dropdown-type').append(`<option value=""> -- សូមជ្រើសរើស -- </option>`); 
             $('#dropdown-type').append(`<option value="Sweet"> បង្អែម  </option>`); 
             $('#dropdown-type').append(`<option value="Cake"> នំ </option>`); 
         }
-        else if(catalog == 'Drink'){
+        else if(category == 'Drink'){
             $('#dropdown-type').prop('disabled', false);
             $('#dropdown-type').html('');
             $('#dropdown-type').append(`<option value=""> -- សូមជ្រើសរើស -- </option>`); 
@@ -38,55 +38,100 @@ $(document).ready(function () {
             $('#dropdown-province').prop('disabled', false);
         }
         else if(country == 'Foreign' || country == ''){
-            $('option[value=""]').prop('selected',true);
+            $('#dropdown-province option[value=""]').prop('selected',true);
             $('#dropdown-province').prop('disabled', true);
-            // $(this).attr('selected','selected');
         }
     });
-
-    // $("#btnAddIngredient").click(function(){
-    //     var num = $("table #ingredient-table").length + 2;
-    //     $("table #ingredient-tbody").append('<tr>'+
-    //                                             '<td>'+
-    //                                                 '<input type="text" class="form-control" value="" />'+
-    //                                             '</td>'+
-    //                                             '<td>'+
-    //                                                 '<input type="text" class="form-control" id="ingredient" name="ingredient2" />'+
-    //                                             '</td>'+
-    //                                             '<td>'+
-    //                                                 '<input type="text" class="form-control" name="qty2"/>'+
-    //                                             '</td>'+
-    //                                             '<td style="text-align: center;">'+
-    //                                                 '<button type="button" class="btn btn-danger form-control"><i class="fa fa-minus-circle"></i></button>'+
-    //                                             '</td>'+
-    //                                             '<td style="text-align: center;">'+
-    //                                                 '<button type="button" class="btn btn-success form-control"><i class="fa fa-undo"></i></button>'+
-    //                                             '</td>'+
-    //                                         '</tr>');
-    // });
 });
 
 function addNewIngredient(){
     var table = document.getElementById("ingredient-table");
-    var row = table.insertRow(3);
+    var rows = table.tBodies[0].rows.length;
+    rows ++;
+    var row = table.insertRow(rows);
     var cell1 = row.insertCell(0);
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
     var cell5 = row.insertCell(4);
     cell1.innerHTML = '<td>'+
-                        '<input type="text" class="form-control" value="" />'+
+                        '<input type="number" class="form-control" value="'+rows+'" name="num'+rows+'"/>'+
                       '</td>';
     cell2.innerHTML = '<td>'+
-                        '<input type="text" class="form-control" id="ingredient" name="ingredient2" onClick="addNewIngredient()" />'+
+                        '<input type="text" class="form-control" id="ingredient" name="ingredient'+rows+'"/>'+
                     '</td>';
     cell3.innerHTML = '<td>'+
-                        '<input type="text" class="form-control" name="qty2"/>'+
+                        '<input type="text" class="form-control" name="qty'+rows+'"/>'+
                     '</td>';
     cell4.innerHTML = '<td style="text-align: center;">'+
-                        '<button type="button" class="btn btn-danger form-control"><i class="fa fa-minus-circle"></i></button>'+
+                        '<button type="button" class="btn btn-danger form-control" value="Delete" onClick="deleteIngredient(this)"><i class="fa fa-minus-circle"></i></button>'+
                     '</td>';
     cell5.innerHTML = '<td style="text-align: center;">'+
-                        '<button type="button" class="btn btn-success form-control"><i class="fa fa-plus-circle" onClick="addNewIngredient()"></i></button>'+
+                        '<button type="button" class="btn btn-success form-control" onClick="addNewIngredient()"><i class="fa fa-plus-circle"></i></button>'+
                     '</td>';
+}
+function deleteIngredient(r){
+    var table = document.getElementById("ingredient-table");
+    var rows = table.tBodies[0].rows.length;
+
+    if(rows>1){
+        var i = r.parentNode.parentNode.rowIndex;
+        table.deleteRow(i);
+    }        
+
+    rows = table.tBodies[0].rows.length;
+    var j=0;
+    while(rows>0){
+        j++;
+        var x = table.rows[j].cells;
+        x[0].innerHTML = '<input type="number" class="form-control" value="'+j+'" />';
+        rows--;
+    }
+    
+}
+
+function addNewRecipe(){
+    var table = document.getElementById("recipe-table");
+    var rows = table.tBodies[0].rows.length;
+    rows ++;
+    var row = table.insertRow(rows);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    cell1.innerHTML = '<td>'+
+                        '<input type="number" id="num'+rows+'" class="form-control" value="'+rows+'" name="no'+rows+'"/>'+
+                      '</td>';
+    cell2.innerHTML = '<td>'+
+                        '<textarea class="form-control" id="exampleFormControlTextarea1" name="recipe'+rows+'" rows="3" style="resize: none;"></textarea>'+
+                    '</td>';
+    cell3.innerHTML = '<td style="text-align: center;">'+
+                        '<button type="button" class="btn btn-danger form-control" value="Delete" onClick="deleteRecipe(this)"><i class="fa fa-minus-circle"></i></button>'+
+                    '</td>';
+    cell4.innerHTML = '<td style="text-align: center;">'+
+                        '<button type="button" class="btn btn-success form-control" onClick="addNewRecipe()"><i class="fa fa-plus-circle"></i></button>'+
+                    '</td>';
+}
+
+function deleteRecipe(r){
+    var table = document.getElementById("recipe-table");
+    var rows = table.tBodies[0].rows.length;
+
+    if(rows>1){
+        var i = r.parentNode.parentNode.rowIndex;
+        table.deleteRow(i);
+    }        
+
+    rows = table.tBodies[0].rows.length;
+    var j=0;
+    while(rows>0){
+        j++;
+        var x = table.rows[j].cells;
+        x[0].innerHTML = '<input type="number" class="form-control" value="'+j+'" />';
+        rows--;
+    }
+    
+}
+function addFood(){
+    alert("ការដាក់ស្នើរបស់លោកអ្នកទទួលបានជោគជ័យ​!! សូមអរគុណ");
 }

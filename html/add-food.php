@@ -1,20 +1,69 @@
 <?php
-
-    $name = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
-    $category = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
-    $name = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
-    $name = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
-    $name = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
-    $name = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
-
-
     //connect to database
     include '../php/connectToDb.php';
     $obj = new DB();
     $con = $obj->conDb();
-    
-?>
+    $con->query('SET character_set_results=utf8');
 
+    //Disply User Name
+    $sql = $con->query("SELECT * FROM `tblcheckrole` WHERE id = 1");    
+    $roleSql = $sql->fetch_assoc();
+    $role = $roleSql["Role"];
+    $name = $roleSql["FirstName"];
+    $usercode = $roleSql["UserCode"];
+
+    //Get id from tblfood
+    $id = (($con->query("SELECT id FROM `tblfood` ORDER BY id DESC LIMIT 1"))->fetch_assoc())["id"] + 1;
+
+
+    //Get Food Information
+    $foodcode = "F".$id;
+    $foodname = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
+    $category = isset($_POST['dropdown-category']) ? $_POST['dropdown-category'] : '';
+    $type = isset($_POST['dropdown-type']) ? $_POST['dropdown-type'] : '';
+    $country = isset($_POST['dropdown-country']) ? $_POST['dropdown-country'] : '';
+    $province = isset($_POST['dropdown-province']) ? $_POST['dropdown-province'] : '';
+    $link = isset($_POST['txtLink']) ? $_POST['txtLink'] : '';
+    $photo = isset($_FILES['photo']['name']) ? $_FILES['photo']['name'] : '';
+    date_default_timezone_set("America/New_York");
+    $date = date("y/m/d h:i:s");    
+
+    if($photo==''){
+      $photo = "addfood.png";
+    }
+
+    if (!empty($_POST)) {
+      //Insert Ingregient
+      $ingredient[] = array();
+      $qty[] = array();
+      for($j=1; $j<=20; $j++){
+        $ingredient[$j] = "ingredient".$j;
+        $qty[$j] = "qty".$j;
+        $in = isset($_POST[$ingredient[$j]]) ? $_POST[$ingredient[$j]] : '';
+        $q = isset($_POST[$qty[$j]]) ? $_POST[$qty[$j]] : '';
+        if($in!=''){
+          $con->query("INSERT INTO tblingredient(FoodCode,Ingredient,Qty) VALUE('".$foodcode."',N'".$in."',N'".$q."')");
+        }
+      }
+
+      //Insert Recipe
+      $recipe[] = array();
+      for($i=1; $i<=20; $i++){
+        $recipe[$i] = "recipe".$i;
+        $r = isset($_POST[$recipe[$i]]) ? $_POST[$recipe[$i]] : '';
+        if($r!=''){
+          $con->query("INSERT INTO tblrecipe(FoodCode,Recipe) VALUE('".$foodcode."',N'".$r."')");
+        }
+      }
+
+      $insert = "INSERT INTO tblfood(`FoodCode`,`FoodName`, `Category`, `FoodType`, `Country`, `Province`, `VideoLink`, `FoodImage`, `FoodDate`, 
+                                      `UserCode`, `Status`) VALUES('".$foodcode."',N'".$foodname."','".$category."','".$type."','".$country."',N'".$province."',
+                                                                    '".$link."','".$photo."','".$date."','".$usercode."',2)";
+      
+      $con->query($insert);
+      header("Refresh:0");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,60 +101,103 @@
     font-family: "Khmer OS Battambang";
     background-color: #FB8442;
   }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .display-none{
+    display: none;
+  }
 </style>
 
 <body>
   <!-- Menu-bar -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
-    <a class="navbar-brand" href="#">
-      <img src="../images/Icon/foodlogo.png" alt="">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-      style="background-color: white">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <a class="navbar-brand" href="../index.php">
+            <img src="../images/Icon/foodlogo.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background-color: white">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <!-- <li class="nav-item active">
+            <!-- <li class="nav-item active">
               <a class="nav-link text-white" href="#">អាហារខ្មែរ<span class="sr-only">(current)</span></a>
             </li> -->
 
-        <li class="nav-item dropdown ab">
-          <a class=" text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ​>
-            មឺនុយ
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="../index.html">ទំព័រដើម</a>
-            <a class="dropdown-item" href="about.html">អំពីពួកយើង</a>
-            <a class="dropdown-item" href="#">ទំនាក់ទំនង</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="food.html">ម្ហូប</a>
-            <a class="dropdown-item" href="sweet.html">បង្អែម</a>
-            <a class="dropdown-item" href="drink.html">ភេសជ្ជ:</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">បន្ថែមមុខម្ហូប</a>
-            <a class="dropdown-item" href="#">រដ្ឋបាល</a>
-          </div>
-        </li>
-        <li class="nav-item ab">
-          <a class="nav-link text-white" href="#">ចូលប្រើ</a>
-        </li>
-
-        <li class="nav-item ab">
-          <a class="nav-link text-white" href="#">ចុះឈ្មោះ</a>
-        </li>
-
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-      </form>
-    </div>
-  </nav>
+            <li class="nav-item dropdown ab">
+                <a class=" text-white nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"​>
+                មឺនុយ
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../index.php">ទំព័រដើម</a>
+                    <a class="dropdown-item" href="about.php">អំពីពួកយើង</a>
+                    <a class="dropdown-item" href="#">ទំនាក់ទំនង</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="food.php">ម្ហូប</a>
+                  <a class="dropdown-item" href="sweet.php">បង្អែម</a>
+                  <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item display-none" href="#" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
+                  <a class="dropdown-item display-none" href="#" id="dropdownAdmin">រដ្ឋបាល</a>
+                  <?php  
+                      if($role==0){
+                          echo '<script type="text/javascript">
+                              $("#dropdownAdd").css("display","none");
+                              $("#dropdownAdmin").css("display","none");
+                              </script>';                                
+                      }                            
+                      if($role==1){
+                          echo '<script type="text/javascript">
+                              $("#dropdownAdd").css("display","block");
+                              </script>';
+                      }                              
+                      if($role==2){
+                          echo '<script type="text/javascript">
+                              $("#dropdownAdd").css("display","block");
+                              $("#dropdownAdmin").css("display","block");
+                              </script>';
+                      }
+                  ?>
+                </div>
+              </li>
+              <li class="nav-item ab">
+                    <a class="nav-link text-white display-none" href="login.php" id="navLogin">ចូលប្រើ</a>
+                </li>
+                <li class="nav-item ab">
+                    <a class="nav-link text-white display-none" href="register.php" id="navRegister">ចុះឈ្មោះ</a>
+                </li>
+                <li class="nav-item ab">
+                    <a class="nav-link text-white display-none" href="login.php" id="navLogout">ចាកចេញ</a>
+                </li>
+                <li class="nav-item ab">
+                    <a class="nav-link text-white display-none" href="login.php" id="navUser">អ្នកប្រើប្រាស់</a>
+                </li>
+                <?php
+                    if($role==0){
+                        echo '<script type="text/javascript">
+                              $("#navLogin").css("display","block");
+                              $("#navRegister").css("display","block");
+                              </script>';
+                    }   
+                    else{
+                        echo '<script type="text/javascript">
+                              $("#navLogout").css("display","block");
+                              $("#navUser").css("display","block");
+                              $("#navUser").text("'.$name.'");
+                              </script>';
+                    }           
+                ?>               
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
+          </form>
+        </div>
+      </nav>
   <!-- End Menu -->
 
   <!-- Add-Fodd-Body -->
@@ -127,16 +219,14 @@
       </div>
     </div>
 
-  <form action="../php/add-food.php" method="post" enctype='multipart/form-data'>
+  <form action="" method="post" enctype='multipart/form-data'>
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-        <!-- <a href=""><img src="../images/addfood.png" alt="" class="img-fluid img-thumbnail addfoodphoto"></a> -->
         <div class="form-group">
-          <!-- <label>ផុសរូបភាព</label> -->
           <div class="input-group">
             <span class="input-group-btn">
               <span class="btn btn-primary btn-file">
-                ដាក់រូបភាព..<input type="file" id="imgInp" name="photo1">
+                ដាក់រូបភាព..<input type="file" id="imgInp" name="photo">
               </span>
             </span>
             <input type="text" class="form-control" readonly style="font-family: KhmerOSbattambang;">
@@ -159,7 +249,7 @@
           </div>
           <div class="form-group searchme">
             <label for="type">ប្រភេទ <b>*</b></label> <br>
-            <select name="dropdown-type" id="dropdown-type" class="form-control" disabled>
+            <select name="dropdown-type" id="dropdown-type" class="form-control" disabled required>
               <option value="">-- សូមជ្រើសរើស --</option>
             </select>
           </div>
@@ -182,8 +272,8 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
           <div class="form-group searchme">
-            <label for="catalog">ផ្នែក <b>*</b></label> <br>
-            <select name="dropdown-catalog" id="dropdown-catalog" class="form-control">
+            <label for="category">ផ្នែក <b>*</b></label> <br>
+            <select name="dropdown-category" id="dropdown-category" class="form-control" required>
               <option value="">-- សូមជ្រើសរើស --</option>
               <option value="Food">ម្ហូប</option>
               <option value="Sweet">បង្អែម</option>
@@ -191,7 +281,7 @@
             </select>
           </div>
           <div class="form-group searchme">
-            <label for="country">ប្រទេស <b>*</b></label> <br>
+            <label for="country">ប្រទេស</label> <br>
             <select name="dropdown-country" id="dropdown-country" class="form-control">
               <option value="">-- សូមជ្រើសរើស --</option>
               <option value="Khmer">ខ្មែរ</option>
@@ -226,7 +316,7 @@
           <tbody id="ingredient-tbody" name="ingredient-tbody">
             <tr>​
               <td>
-                <input type="text" class="form-control" value="1" name="zzzzzzzz"/>
+                <input type="number" class="form-control" value="1" name="num1"/>
               </td>
               <td>
                 <input type="text" class="form-control" id="ingredient1" name="ingredient1" />
@@ -235,29 +325,28 @@
                 <input type="text" class="form-control" name="qty1" />
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-danger form-control"><i class="fa fa-minus-circle"></i></button>
+                <button type="button" class="btn btn-danger form-control" value="Delete" onClick="deleteIngredient(this)"><i class="fa fa-minus-circle"></i></button>
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-success form-control"><i class="fa fa-plus-circle"></i></button>
+                <button type="button" class="btn btn-success form-control" onClick="addNewIngredient()"><i class="fa fa-plus-circle"></i></button>
               </td>
             </tr>
             <tr>
               <td>
-                <input type="text" class="form-control" value="2" name="numberIn"/>
+                <input type="number" class="form-control" value="2" name="number2"/>
               </td>
               <td>
                 <input type="text" class="form-control" id="ingredient" name="ingredient2"
-                  onClick="addNewIngredient()" />
+                   />
               </td>
               <td>
                 <input type="text" class="form-control" name="qty2" />
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-danger form-control"><i class="fa fa-minus-circle"></i></button>
+                <button type="button" class="btn btn-danger form-control" value="Delete" onClick="deleteIngredient(this)"><i class="fa fa-minus-circle"></i></button>
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-success form-control" onClick="addNewIngredient()"><i
-                    class="fa fa-plus-circle"></i></button>
+                <button type="button" class="btn btn-success form-control" onClick="addNewIngredient()"><i class="fa fa-plus-circle"></i></button>
               </td>
             </tr>
           </tbody>
@@ -272,7 +361,7 @@
     </div>
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-        <table class="table">
+        <table class="table" id="recipe-table">
           <thead>
             <tr class="thead-light">
               <th scope="col" style="width: 5.5%;">#</th>
@@ -284,32 +373,32 @@
           <tbody>
             <tr>
               <td>
-                <input type="text" class="form-control" value="1" />
+                <input type="number" id="num1" class="form-control" value="1" name="no1"/>
               </td>
               <td>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="recipe1"
                   style="resize: none;"></textarea>
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-danger form-control"><i class="fa fa-minus-circle"></i></button>
+                <button type="button" class="btn btn-danger form-control" value="Delete" onClick="deleteRecipe(this)"><i class="fa fa-minus-circle"></i></button>
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-success form-control"><i class="fa fa-undo"></i></button>
+                <button type="button" class="btn btn-success form-control" onClick="addNewRecipe()"><i class="fa fa-plus-circle"></i></button>
               </td>
             </tr>
             <tr>
               <td>
-                <input type="text" class="form-control" value="2" />
+                <input type="number" id="num2" class="form-control" value="2" name="no2"/>
               </td>
               <td>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="recipe2"
                   style="resize: none;"></textarea>
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-danger form-control"><i class="fa fa-minus-circle"></i></button>
+                <button type="button" class="btn btn-danger form-control" value="Delete" onClick="deleteRecipe(this)"><i class="fa fa-minus-circle"></i></button>
               </td>
               <td style="text-align: center;">
-                <button type="button" class="btn btn-success form-control"><i class="fa fa-undo"></i></button>
+                <button type="button" class="btn btn-success form-control" onClick="addNewRecipe()"><i class="fa fa-plus-circle"></i></button>
               </td>
             </tr>
           </tbody>
@@ -331,7 +420,7 @@
     </div>
 
     <div class="text-right" style="margin-top: 30px; margin-bottom: 50px;">
-      <button type="submit" class="btn btn-primary">ដាក់ស្នើ</button>
+      <button type="submit" class="btn btn-primary" onClick="addFood()">ដាក់ស្នើ</button>
     </div>
 
   </div>
@@ -340,7 +429,7 @@
 
   <!-- Footer -->
 
-  <div class="container-fluid" style="padding:30px; background-color: #043927;"">
+  <div class="container-fluid" style="padding:30px; background-color: #043927;">
         <div class=" row" style="padding-top: 20px; text-align: center;">
     <div class="col-lg-4 col-md-4 col-sm-12 col-12">
       <img src="../images/Icon/foodlogo.png" alt="">
