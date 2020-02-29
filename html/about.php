@@ -137,31 +137,39 @@
 
       <!-- about body -->
 
-      <div class="container big" style="text-align: center;">
-          <div class="row">
-              <div class="col-lg-4 col-lg-4 col-md-6 col-sm-6 col-12 col-sm-12 col-12">
-                  <img src="../images/boycarton.png" alt="Teacher web image">
+      <div class="container big">
+          <div class="row foodbk">
+              <div class="col-lg-7 col-md-7 col-sm-12 col-12">
+                  <!-- <img src="../images/foodhightlight.png" alt="Teacher web image"> -->
               </div>
-              <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-                <h2>ចង់ដឹងព័ត៌មានច្បាស់ពីសាកលវិទ្យាល័យមែនទេ?​</h2>
-                <p><i><b>ព័ត៌មានសាកលវិទ្យាល័យនិងអាហារូបករណ៌គឺជាគេហទំព័រមួយដែលជួយដល់សិស្សដែលទើបបញ្ចប់
-                    ការសិក្សាមធ្យមសិក្សាទុតិយភូមិក្នុងការស្វែងយល់អោយបានច្បាស់ពីសាកលវិទ្យាល័យនានាក្នុងព្រះរាជាណាចក្រ
-                    កម្ពុជា លើសពីនេះទៅទៀតគេហទំព័រនេះក៏ផ្តល់ព័ត៌មានអំពីអាហារូបករណ៌ផងដែរ៕ 
-                </b></i></p>
+              <div class="col-lg-5 col-md-5 col-sm-12 col-12" style="padding-top: 120px;">
+                <h2 class="text-center">ចង់ដឹងពីរបៀបចម្អិនម្ហូបមែនទេ?​</h2>
+                <p style="padding:30px; line-height: 28px; font-size: 14px; color: blue;">
+                    វេបសាយ QuickCook អាចជួយលោកអ្នកបាន។
+                    ម្ហូបឆ្ងាញ់ មិនមែនមានន័យថាត្រូវពិបាកចម្អិននោះទេ 
+                    សំខាន់គឹដឹងពីគឿងផ្សំ និងរបៀបធ្វើទៅតាមម្ហូបនីមួយៗ។
+                    QuickCook នឹងជួយអោយការចម្អិនអាហាររបស់អ្នកកាន់តែងាយស្រួល រហ័ស
+                    ព្រមទាំងបង្កើនរសជាតិអាហារឱ្យកាន់តែឆ្ងាញ់ និងផ្តល់សុខភាពល្អជូនគ្រួសារលោកអ្នក។ 
+                </p>
               </div>
           </div>
 
         <div class="row" style="margin-top: 100px;">
-            <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-                <h2>សេចក្តីថ្លែងអំណរគុណ</h2>
-                <p><i><b>ក្រុមយើងខ្ញុំសូមធ្វើសេចក្តីថ្លែងអំណរគុណយ៉ាងខ្លាំងចំពោះលោកសាស្ត្រាចារ្យ ជីម ប៊ុនធឿន ដែលបានចំណាយ
+            <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                <h2 class="text-center">សេចក្តីថ្លែងអំណរគុណ</h2>
+                <p style="padding:30px; line-height: 28px; font-size: 14px;">ក្រុមយើងខ្ញុំសូមធ្វើសេចក្តីថ្លែងអំណរគុណយ៉ាងខ្លាំងចំពោះលោកសាស្ត្រាចារ្យ ជីម ប៊ុនធឿន ដែលបានចំណាយ
                     ពេលវេលាដ៏មានតម្លៃក្នុងការបង្រៀនពួកយើង និងជាអ្នកផ្តួចផ្តើមគំនិតបង្កើតគេហទំព័រមួយនេះអោយលេចចេញជា
                     រូបរាងឡើង។
-                </b></i></p>
+                </p>
             </div>
 
-            <div class="col-lg-4 col-lg-4 col-md-6 col-sm-6 col-12 col-sm-12 col-12">
-                <img src="../images/teacher.png" alt="Teacher web image">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-12 text-center">
+                <img src="../images/About/teacher.png" alt="Teacher web image">
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-12 col-12 text-center">
+                <!-- <div class="view overlay zoom"> -->
+                    <img src="../images/About/rupp.png">
+                <!-- </div> -->
             </div>
         </div>
 
@@ -169,8 +177,8 @@
 
         <div class="row"​​ style="margin-top: 100px;">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <h2>ពួកយើងជានរណា?</h2>
-                <p>ពួកយើងជាក្រុមនិស្សិតអាហារូបករណ៌មកពីសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ ឆ្នាំទី៤​ ដែលមានសមានជិកទាំងអស់៥នាក់
+                <h2 class="text-center">ពួកយើងជានរណា?</h2>
+                <p class="text-center" style="line-height: 28px; font-size: 14px;">ពួកយើងជាក្រុមនិស្សិតអាហារូបករណ៌មកពីសាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ ឆ្នាំទី៤​ ដែលមានសមានជិកទាំងអស់៤នាក់
                 និងកំពុងសិក្សាជំនាញព័ត៌មានវិទ្យា។</p>
             </div>
         </div>
@@ -179,25 +187,25 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-6 profileabout">
                 <img src="../images/User/Enghorng.png" alt="" class="image rounded">
                     <div class="overlay">
-                        <div class="text"><b>លាន​ អេងហ៊ង</b> </div>
+                        <div class="text"><b>លាន​ អេងហ៊ង​<br>Team Leader<br>Backend Developer</b> </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6 profileabout">
                 <img src="../images/User/Pheary.png" alt="" class="image rounded">
                     <div class="overlay">
-                        <div class="text"><b>​​រិន​ សុភារី</b> </div>
+                        <div class="text"><b>​​រិន​ សុភារី<br>Graphic Designer<br>Frontend Developer</b> </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6 profileabout">
-                <img src="../images/User/Sreyleap.png" alt="" class="image rounded">
+                <img src="../images/User/sreyleap.png" alt="" class="image rounded">
                     <div class="overlay">
-                        <div class="text"><b>​​រួន ស្រីលាភ</b> </div>
+                        <div class="text"><b>​​រួន ស្រីលាភ<br>Member<br>Content Writer</b> </div>
                     </div>
             </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-6 profileabout">
-                <img src="../images/User/Senghak.png" alt="" class="image rounded">
+                <img src="../images/User/senghak.png" alt="" class="image rounded">
                     <div class="overlay">
-                        <div class="text"><b>​​ឃួន សេងហាក់</b> </div>
+                        <div class="text"><b>​​ឃួន សេងហាក់<br>Member<br>Presenter</b> </div>
                     </div>
             </div>
         </div>
