@@ -140,7 +140,7 @@
       <div class="container big">
           <div class="row foodbk">
               <div class="col-lg-7 col-md-7 col-sm-12 col-12">
-                  <!-- <img src="../images/foodhightlight.png" alt="Teacher web image"> -->
+                  <img src="../images/About/aboutBackground.jpg" alt="Teacher web image">
               </div>
               <div class="col-lg-5 col-md-5 col-sm-12 col-12" style="padding-top: 120px;">
                 <h2 class="text-center">ចង់ដឹងពីរបៀបចម្អិនម្ហូបមែនទេ?​</h2>
