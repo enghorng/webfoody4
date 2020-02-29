@@ -367,7 +367,7 @@
               <th scope="col" style="width: 5.5%;">#</th>
               <th scope="col" style="width: 70.5%">ពណ៌នា</th>
               <th scope="col" style="width: 10%;">លុបចោល</th>
-              <th scope="col" style="width: 10%;">ធ្វើឡើងវិញ</th>
+              <th scope="col" style="width: 10%;">បន្ថែម</th>
             </tr>
           </thead>
           <tbody>
