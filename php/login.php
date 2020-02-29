@@ -12,8 +12,9 @@
     $roleSql = $sql->fetch_assoc();
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
+    $code = $roleSql["UserCode"];
       
-    $con->query("UPDATE `tblcheckrole` SET `Role`= ".$role.", `FirstName`=N'".$name."' WHERE id = 1");
+    $con->query("UPDATE `tblcheckrole` SET `Role`= ".$role.", `FirstName`=N'".$name."', `UserCode`='".$code."' WHERE id = 1");
     echo "<script> location.href='../index.php'</script>"; 
 
     $con->close();    
