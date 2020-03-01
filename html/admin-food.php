@@ -11,6 +11,16 @@
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
     $usercode = $roleSql["UserCode"];
+
+    //Select Food Information
+    $foodSql = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");    
+      
+    $foodSql1 = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");   
+    while($i = $foodSql1->fetch_assoc()){
+      $total[] = $i["FoodName"];
+    }  
+
+    $count = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -217,97 +227,35 @@
             </div>  
             
             <!-- Food-all-here -->
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a href="../html/food-detail.php"><img class="card-img-top" src="../images/chicken.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                            
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-            
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-            
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                          <div class="food-div">
-                              <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                          </div>
-                          <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                          <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                      </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                          <div class="food-div">
-                              <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                          </div>
-                          <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                          <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                      </div>
-            
-                      <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
+            <div class="row" id="viewFood1">
+      <?php
+        if ($foodSql->num_rows > 0) {         
+            while($food = $foodSql->fetch_assoc()) {
+                if($count == 15) break;
+                $count++;
+                //Check Status
+                if($food["Status"]==0){
+                  $color = "red";
+                }
+                else if($food["Status"]==1){
+                  $color = "green";
+                }
+                else if($food["Status"]==2){
+                  $color = "blue";
+                }
+
+                echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
                         <div class="food-div">
-                            <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
+                        <a href="food-detail.php?food-id='.$food['FoodCode'].'">
+                        <img class="card-img-top" src="../images/'.$food['Category'].'/'.$food['FoodImage'].'"></a>
                         </div>
-                        <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                        <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                        <div class="food-div">
-                            <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                        </div>
-                        <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                        <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                    </div>
-            
-                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                      <div class="food-div">
-                          <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                      </div>
-                      <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                      <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                  </div>
-                  <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                      <div class="food-div">
-                          <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                      </div>
-                      <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                      <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>  
-                  </div>
-                    </div>
+                        <a href="food-detail.php?food-id='.$food['FoodCode'].'"><h6>'.$food['FoodName'].'</h6></a>
+                        <span style="color: '.$color.';" class="text-right">&nbsp;&#9679;</span>
+                      </div>';                                                     
+            }
+        }
+      ?>
+    </div>
             <!-- End-Food-All -->
             
             

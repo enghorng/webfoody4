@@ -39,7 +39,7 @@
     else{
         $userCode = $userCode.$maxID["id"];
     }
-
+ 
 
     //Select User's Email and Phone
     $sql = $con->query("SELECT Email, Phone FROM `tbluser`");

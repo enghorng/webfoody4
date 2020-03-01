@@ -2,7 +2,7 @@
     //connect to database
     include '../php/connectToDb.php';
     $obj = new DB();
-    $con = $obj->conDb();
+    $con = $obj->conDb(); 
 
     $con->query("UPDATE `tblcheckrole` SET `Role`= 0, `FirstName`=N'អ្នកប្រើប្រាស់' WHERE id = 1");
 

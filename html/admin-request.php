@@ -11,6 +11,16 @@
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
     $usercode = $roleSql["UserCode"];
+
+    //Select Food Information
+   $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Status=2 ORDER BY FoodDate DESC");    
+    
+   $foodSql1 = $con->query("SELECT * FROM `tblfood` WHERE Status=2 ORDER BY FoodDate DESC");   
+   while($i = $foodSql1->fetch_assoc()){
+     $total[] = $i["FoodName"];
+   }  
+
+   $count = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -156,228 +166,171 @@
       </form>
     </div>
   </nav>
-      <!-- End Menu -->
+  <!-- End Menu -->
 
-    <!-- Food-Body -->
-    <div class="container">
-      <div class="row">
-        <!-- col1 -->
-        <div class="col-lg-2 col-md-4 col-sm-5 col-5 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar" style="border-right:2px solid lightgray">
-            <ul class="nav flex-column flex-nowrap">
-              <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#"><h3 style="padding-top: 30px; padding-bottom: 20px;">រដ្ឋបាល</h3></a></li>
+  <!-- Food-Body -->
+  <div class="container">
+    <div class="row">
+      <!-- col1 -->
+      <div class="col-lg-2 col-md-4 col-sm-5 col-5 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar"
+        style="border-right:2px solid lightgray">
+        <ul class="nav flex-column flex-nowrap">
+          <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#">
+              <h3 style="padding-top: 30px; padding-bottom: 20px;">រដ្ឋបាល</h3>
+            </a></li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#submenu1" data-target="#submenu1"
+              data-toggle="collapse">អ្នកប្រើប្រាស់&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a>
+            <div class="collapse" id="submenu1" aria-expanded="false">
+              <ul class="flex-column pl-2 nav">
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#submenu1" data-target="#submenu1" data-toggle="collapse">អ្នកប្រើប្រាស់&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a>
-                        <div class="collapse" id="submenu1" aria-expanded="false">
-                            <ul class="flex-column pl-2 nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../html/admin.php" ><span>បង្កើតគណនីយថ្មី</span></a>
-                                </li>
-                                <div class="dropdown-divider"></div>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="../html/user-info.php" ><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
-                                </li>
-                            </ul>
-                        </div>
+                  <a class="nav-link" href="../html/admin.php"><span>បង្កើតគណនីយថ្មី</span></a>
                 </li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-food.php">ម្ហូប</a></li>
-                <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="#request-conten">ការស្នើសុំ</a></li>
-                <div class="dropdown-divider"></div>
-            </ul>
-        </div>
-        <!-- End-Col-1 -->
-        
-        <!-- col2 -->
-        <div class="col-lg-10 col-md-8 col-sm-7 col-7">
+                <li class="nav-item">
+                  <a class="nav-link" href="../html/user-info.php"><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <div class="dropdown-divider"></div>
+          <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-food.php">ម្ហូប</a></li>
+          <div class="dropdown-divider"></div>
+          <li class="nav-item"><a class="nav-link text-truncate" href="#request-conten">ការស្នើសុំ</a></li>
+          <div class="dropdown-divider"></div>
+        </ul>
+      </div>
+      <!-- End-Col-1 -->
+
+      <!-- col2 -->
+      <div class="col-lg-10 col-md-8 col-sm-7 col-7">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-        <center>
-                    <h4 class="​ text-success"​ style="margin-top:5%">ម្ហូបដែលបានដាក់ស្នើ</h4>
-                    </center>
-                </div> 
-            <div id="request-content" style="padding-top: 20px;"> 
-              <div class="row food-large-title no-gutters">
-
-                <div class="col-lg-3 col-md-3 col-sm-3 col-12">
-                 <select class="form-control" style="font-family: KhmerOSbattambang;">
-                   <option value="User">ទាំងអស់</option>
-                   <option value="Admin">ម្ហូប</option>
-                   <option value="User">បង្អែម</option>
-                   <option value="User">ភេសជ្ជ:</option>
-                 </select>
-                </div>
-
-                
-                
-            </div> 
-              
-              <!-- Food-all-here -->
-                      <div class="row">
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                              <div class="food-div">
-                                  <a href="../html/food-detail.php"><img class="card-img-top" src="../images/chicken.jpg"></a>
-                              </div>
-                              <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                              <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                              
-                          </div>
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                              <div class="food-div">
-                                  <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                              </div>
-                              <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                              <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                          </div>
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                              <div class="food-div">
-                                  <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                              </div>
-                              <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                              <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                          </div>
-              
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                              <div class="food-div">
-                                  <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                              </div>
-                              <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                              <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                          </div>
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                              <div class="food-div">
-                                  <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                              </div>
-                              <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                              <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                          </div>
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                              <div class="food-div">
-                                  <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                              </div>
-                              <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                              <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                          </div>
-              
-                          <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                            <div class="food-div">
-                                <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                            </div>
-                            <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                            <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                        </div>
-              
-                        <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                          <div class="food-div">
-                              <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                          </div>
-                          <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                          <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                      </div>
-                      <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                          <div class="food-div">
-                              <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                          </div>
-                          <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                          <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                      </div>
-              
-                      <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                        <div class="food-div">
-                            <a target="_blank"><img class="card-img-top" src="../images/papaya.jpg"></a>
-                        </div>
-                        <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                        <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                        <div class="food-div">
-                            <a target="_blank"><img class="card-img-top" src="../images/soup.jpg"></a>
-                        </div>
-                        <a href="../html/food-detail.php"><h6 class="text-center">ស្លាបមាន់បំពងល្ងស</h6></a>
-                        <span style='color: blue;' class="text-right">&nbsp;&#9679;</span>  
-                    </div>
-                      </div>
-              <!-- End-Food-All -->
-              
-              
-                <div class="row">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-12 total-food">
-                      <p>ចំនួនមុខម្ហូបសរុប៖ 15/300</p>
-                  </div>
-              </div>
-              
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                      <nav aria-label="Fodd Page navigation">
-                          <ul class="pagination justify-content-center pagination pagination-lg">
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                              </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </nav>
-                    </div>
-                </div>
-              </div>
-
-            <!-- End-request-content -->
+          <center>
+            <h4 class="​ text-success" ​ style="margin-top:5%">ម្ហូបដែលបានដាក់ស្នើ</h4>
+          </center>
         </div>
-        <!-- End-Col-2 -->
+        <div id="request-content" style="padding-top: 20px;">
+          <div class="row food-large-title no-gutters">
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-12">
+              <select class="form-control" style="font-family: KhmerOSbattambang;">
+                <option value="User">ទាំងអស់</option>
+                <option value="Admin">ម្ហូប</option>
+                <option value="User">បង្អែម</option>
+                <option value="User">ភេសជ្ជ:</option>
+              </select>
+            </div>
+
+
+
+          </div>
+
+          <!-- Food-all-here -->
+          <div class="row" id="viewFood1">
+      <?php
+        if ($foodSql->num_rows > 0) {         
+            while($food = $foodSql->fetch_assoc()) {
+                if($count == 15) break;
+                $count++;
+                //Check Status
+                if($food["Status"]==0){
+                  $color = "red";
+                }
+                else if($food["Status"]==1){
+                  $color = "green";
+                }
+                else if($food["Status"]==2){
+                  $color = "blue";
+                }
+
+                echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
+                        <div class="food-div">
+                        <a href="checkFood.php?food-id='.$food['FoodCode'].'">
+                        <img class="card-img-top" src="../images/'.$food['Category'].'/'.$food['FoodImage'].'"></a>
+                        </div>
+                        <a href="checkFood.php?food-id='.$food['FoodCode'].'"><h6>'.$food['FoodName'].'</h6></a>
+                        <span style="color: '.$color.';" class="text-right">&nbsp;&#9679;</span>
+                      </div>';                                                     
+            }
+        }
+      ?>
     </div>
+          <!-- End-Food-All -->
 
-    </div>
-      <!-- End-Food-Body -->
 
-    <!-- Footer -->
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12 total-food">
+              <p>ចំនួនមុខម្ហូបសរុប៖ 15/300</p>
+            </div>
+          </div>
 
-    <div class="container-fluid" style="padding:30px; background-color: #043927;"">
-        <div class="row" style="padding-top: 20px; text-align: center;">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                <img src="../images/foodlogo.png" alt="">
-                <div class="text-white">QuickCook</div>
+          <div class="row" style="margin-top: 30px;">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+              <nav aria-label="Fodd Page navigation">
+                <ul class="pagination justify-content-center pagination pagination-lg">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                <h5 class="text-white" style="margin-bottom: 30px;">ព័ត៌មានបន្ថែម</h5>
-                <p class="text-white">អាស័យដ្ឋាន៖  ផ្ទះលេខ១៣, ផ្លូវ12A, សង្កាត់ដង្កោ, ខណ្ណដង្កោ, រាជធានីភ្នំពេញ, កម្ពុជា</p>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                <h5 class="text-white" style="margin-bottom: 30px;">ភ្ជាប់ទំនាក់ទំនងជាមួយពួកយើង</h5>
-                <div class="social">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-youtube"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-                </div>
-                
-            </div>
+          </div>
         </div>
+
+        <!-- End-request-content -->
+      </div>
+      <!-- End-Col-2 -->
     </div>
 
-    <!-- End Footer -->
-    
-    <!-- Bottom-To-Top -->
-    <a id="back-to-top" href="#" class="btn btn-lg back-to-top bg-info" role="button">
-        <i class="fa fa-chevron-up" style="color: whitesmoke;"></i>
-    </a>
-    <!-- End bottom to top -->
+  </div>
+  <!-- End-Food-Body -->
 
-    
+  <!-- Footer -->
+
+  <div class="container-fluid" style="padding:30px; background-color: #043927;"">
+        <div class=" row" style="padding-top: 20px; text-align: center;">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+      <img src="../images/foodlogo.png" alt="">
+      <div class="text-white">QuickCook</div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+      <h5 class="text-white" style="margin-bottom: 30px;">ព័ត៌មានបន្ថែម</h5>
+      <p class="text-white">អាស័យដ្ឋាន៖ ផ្ទះលេខ១៣, ផ្លូវ12A, សង្កាត់ដង្កោ, ខណ្ណដង្កោ, រាជធានីភ្នំពេញ, កម្ពុជា</p>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+      <h5 class="text-white" style="margin-bottom: 30px;">ភ្ជាប់ទំនាក់ទំនងជាមួយពួកយើង</h5>
+      <div class="social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+        <a href="#"><i class="fa fa-youtube"></i></a>
+        <a href="#"><i class="fa fa-linkedin"></i></a>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  <!-- End Footer -->
+
+  <!-- Bottom-To-Top -->
+  <a id="back-to-top" href="#" class="btn btn-lg back-to-top bg-info" role="button">
+    <i class="fa fa-chevron-up" style="color: whitesmoke;"></i>
+  </a>
+  <!-- End bottom to top -->
+
+
 </body>
+
 </html>

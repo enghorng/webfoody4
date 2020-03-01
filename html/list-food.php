@@ -10,7 +10,7 @@
     $roleSql = $sql->fetch_assoc();
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
-    $usercode = $roleSql["UserCode"];
+    $usercode = $roleSql["UserCode"]; 
 
    //Select Food Information
    $foodSql = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");    

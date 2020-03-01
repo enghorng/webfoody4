@@ -251,7 +251,9 @@
                                 <span>
                                     <h4>ម្ហូប</h4>
                                 </span>
-                                <button class="btn btn-warning" type="button" style="float: right; background-color: #ffb733;">ច្រើនទៀត</button>
+                                <a href='html/food.php'>
+                                    <button class="btn btn-warning" type="button" style="float: right; background-color: #ffb733;">ច្រើនទៀត</button>
+                                </a>
                                 <!-- <button type="button" class="btn btn-primary btn-sm" style="float: right;">ច្រើនទៀត</button> -->
                             </div>
                             <div class="row">
@@ -278,7 +280,9 @@
                                                             </a>
                                                             </div>
                                                             <h6> ".$food['FoodName']." </h6>
-                                                            <button type='button' class='btn btn-success btn-sm' name='".$food['FoodCode']."'>របៀបធ្វើ</button>
+                                                            <a href='html/food-detail.php?food-id=".$food['FoodCode']."'>
+                                                                <button type='button' class='btn btn-success btn-sm' name='".$food['FoodCode']."'>របៀបធ្វើ</button>
+                                                            </a>    
                                                             <div class='media align-self-left'>
                                                             <img src='./images/User/".$food['UserImage']."' alt='John Doe' class='ml-3 mt-3 rounded-circle photouser' style='width:25px; height: 25px; margin-left: 10px;'>
                                                             <div class='align-self-center'>
@@ -302,8 +306,10 @@
                                 <span style="font-family: Khmer OS Battambang;">
                                     <h4>បង្អែម</h4>
                                 </span>
-                                <button class="btn btn-warning" type="button" style="float: right;background-color: #ffb733;">ច្រើនទៀត</button>
-                            </div>
+                                
+                                <a href='html/sweet.php'>
+                                    <button class="btn btn-warning" type="button" style="float: right; background-color: #ffb733;">ច្រើនទៀត</button>
+                                </a></div>
                             <div class="row">
                                 <!-- left -->
                                 <div class="col-lg-4 d-none d-lg-block left">
@@ -328,7 +334,9 @@
                                                                 </a>
                                                                 </div>
                                                                 <h6> ".$sweet['FoodName']." </h6>
-                                                                <button type='button' class='btn btn-success btn-sm' name='".$sweet["FoodCode"]."'>របៀបធ្វើ</button>
+                                                                <a href='html/food-detail.php?food-id=".$sweet['FoodCode']."'>
+                                                                    <button type='button' class='btn btn-success btn-sm' name='".$sweet['FoodCode']."'>របៀបធ្វើ</button>
+                                                                </a> 
                                                                 <div class='media align-self-left'>
                                                                 <img src='./images/User/".$sweet['UserImage']."' alt='John Doe' class='ml-3 mt-3 rounded-circle photouser' style='width:25px; height: 25px; margin-left: 10px;'>
                                                                 <div class='align-self-center'>
@@ -353,8 +361,10 @@
                                 <span style="font-family: Khmer OS Battambang;">
                                     <h4>ភេសជ្ជ:</h4>
                                 </span>
-                                <button class="btn btn-warning" type="button" style="float: right;background-color: #ffb733;">ច្រើនទៀត</button>
-                                <!-- <button type="button" class="btn btn-primary btn-sm" style="float: right;">ច្រើនទៀត</button> -->
+                                
+                                <a href='html/drink.php'>
+                                    <button class="btn btn-warning" type="button" style="float: right; background-color: #ffb733;">ច្រើនទៀត</button>
+                                </a><!-- <button type="button" class="btn btn-primary btn-sm" style="float: right;">ច្រើនទៀត</button> -->
                             </div>
                             <div class="row">
                                 <!-- left -->
@@ -379,8 +389,10 @@
                                                                     <img class='card-img-top' src='./images/Drink/".$drink['FoodImage']."'>
                                                                 </a>
                                                                 </div>
-                                                                <h6> ".$drink['FoodName']." </h6>
-                                                                <button type='button' class='btn btn-success btn-sm' name='".$drink['FoodCode']."'>របៀបធ្វើ</button>
+                                                                <h6> ".$drink['FoodName']." </h6>                                                                
+                                                                <a href='html/food-detail.php?food-id=".$drink['FoodCode']."'>
+                                                                    <button type='button' class='btn btn-success btn-sm' name='".$drink['FoodCode']."'>របៀបធ្វើ</button>
+                                                                </a> 
                                                                 <div class='media align-self-left'>
                                                                 <img src='./images/User/".$drink['UserImage']."' alt='John Doe' class='ml-3 mt-3 rounded-circle photouser' style='width:25px; height: 25px; margin-left: 10px;'>
                                                                 <div class='align-self-center'>

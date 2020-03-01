@@ -11,6 +11,64 @@
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
     $usercode = $roleSql["UserCode"];
+
+    //Select User's Email and Phone
+    $sql = $con->query("SELECT Email, Phone FROM `tbluser`");
+
+    while($i = $sql->fetch_assoc()){
+        $emailArray[] = $i["Email"];
+        if($i["Phone"]=='' || $i["Phone"]== null) continue;
+        else $phoneArray[] = $i["Phone"];
+    }
+
+    //Insert New User Account
+    if (!empty($_POST)) {
+      $firstName = $_POST["txtFirstName"]; 
+      $lastName = $_POST["txtLastName"]; 
+      $gender = $_POST["rdoGender"];
+      $email = $_POST["txtEmail"]; 
+      $phone = $_POST["txtPhone"]; 
+      $pwd = $_POST["txtPwd"];
+      $userCode = "U";
+      date_default_timezone_set("America/New_York");
+      $date = date("y/m/d h:i:s");
+
+      // Translate from English to Khmer
+      if($gender=='Female'){
+          $gender = 'ស្រី';
+          $photo = "Female.png";
+      }
+      else{
+          $gender = 'ប្រុស';
+          $photo = "Male.png";
+      }
+
+      $con->query('SET character_set_results=utf8');
+
+      //Select the largest id number 
+      $idSql=$con->query("SELECT id FROM `tbluser` ORDER BY id DESC LIMIT 1");
+      $maxID = $idSql->fetch_assoc();
+      $maxID["id"] = $maxID["id"] + 1;
+      if($maxID["id"]< 10){
+          $userCode = $userCode."00".$maxID["id"];
+      }
+      elseif($maxID["id"]< 100){
+          $userCode = $userCode."0".$maxID["id"];
+      }
+      else{
+          $userCode = $userCode.$maxID["id"];
+      }
+    
+        // //Insert Statement
+        $sql = "INSERT INTO `tbluser`(`UserCode`, `FirstName`, `LastName`, `Gender`, `Email`, 
+                `Phone`, `Pwd`,`UserImage`,`RegisterDate`, `Status`,`Role`) VALUES ('".$userCode."',N'".$firstName."',
+                N'".$lastName."',N'".$gender."','".$email."','".$phone."','".$pwd."','".$photo."','".$date."',1,1)";
+        // echo $sql;
+        if ($con->query($sql) === TRUE) { 
+          header("Refresh:0");
+        }
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -190,7 +248,7 @@
         
         <!-- col2 -->
         <div class="col-lg-10 col-md-8 col-sm-7 col-7" style="padding-top: 40px; padding-left: 100px;">
-            <form action="">
+            <form action="" method="POST">
                     <div class="form-group row searchme">
                         <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group"> <h4 class="text-success"> បង្កើតគណនីថ្មី <h4> </div>
                     </div>
@@ -199,10 +257,10 @@
                             <label class="col-form-label control-label">ឈ្មោះ</label>
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-12 col-12">
-                            <input type="text" class="form-control" placeholder="នាមខ្លួន"/>
+                            <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" placeholder="នាមខ្លួន" autofocus required>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                            <input type="text" class="form-control"​ placeholder="នាមត្រកូល"/>
+                            <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="នាមត្រកូល" required>
                         </div>
                     </div>
 
@@ -211,12 +269,10 @@
                             <label class="col-form-label">ភេទ</label>
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-6 col-6">
-                            <input type="radio" name="gender" value="Male"/>
-                            <label class="col-form-label">ប្រុស</label>
+                            <input type="radio" name="rdoGender" value="Male" checked>ប្រុស
                         </div>
                         <div class="col-lg-7 col-md-6 col-sm-6 col-6">
-                            <input type="radio" name="gender" value="Female"/>
-                            <label class="col-form-label">ស្រី</label>
+                            <input type="radio" name="rdoGender" value="Female">ស្រី
                         </div>
                     </div>
 
@@ -225,25 +281,8 @@
                             <label class="col-form-label control-label">អ៊ីម៉ែល</label>
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="email" class="form-control" placeholder="example@gmail.com"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row searchme">
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
-                            <label class="col-form-label control-label">លេខសម្ងាត់</label>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="password" class="form-control"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group row searchme">
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
-                            <label class="col-form-label control-label">ផ្ទៀងផ្ទាត់លេខសម្ងាត់</label>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="password" class="form-control"/>
+                            <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="example@gmail.com" required>
+                            <p id="msgErrEmail"><p>
                         </div>
                     </div>
 
@@ -252,12 +291,34 @@
                             <label class="col-form-label control-label">លេខទូរស័ព្ទ</label>
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="number" class="form-control"/>
+                            <input type="number" class="form-control" id="txtPhone" name="txtPhone" placeholder="">
+                            <p id="msgErrPhone"><p>
                         </div>
                     </div>
 
+                    <div class="form-group row searchme">
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
+                            <label class="col-form-label control-label">លេខសម្ងាត់</label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-12 col-12">
+                            <input type="password" class="form-control" id="txtPwd" name="txtPwd" placeholder="" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row searchme">
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
+                            <label class="col-form-label control-label">ផ្ទៀងផ្ទាត់លេខសម្ងាត់</label>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-12 col-12">
+                            <input type="password" class="form-control" id="txtConfirmPwd" name="txtConfirmPwd" placeholder="" required>
+                            <p id="error-Msg" class="info"></p>
+                        </div>
+                    </div>
+
+                    
+
                     <div class="text-right" style="margin-top: 30px; padding-bottom: 30px;">
-                        <button type="submit" class="btn btn-primary">បង្កើត</button>
+                        <button type="submit" id="btnCreate" class="btn btn-primary" disabled>បង្កើត</button>
                       </div>
             </form>
         </div>
@@ -299,7 +360,77 @@
         <i class="fa fa-chevron-up" style="color: whitesmoke;"></i>
     </a>
     <!-- End bottom to top -->
+    <script>
+        $(document).ready(function () {
+            var mail = 0;
+            var phone = 0;
+            var p = 0;
+            $("#txtEmail").keyup(function () {                
+                var emailList = <?php echo json_encode($emailArray); ?>;
+                for(var i=0; i<emailList.length; i++){
+                    if($("#txtEmail").val()==emailList[i]){
+                        mail = 1;
+                        $('#msgErrEmail').html('<br>អ៊ីមែលនេះបានធ្វើការបង្កើតគណនីរួចហើយ').css('color', 'red');
+                        break;
+                    }
+                    else{
+                        mail = 0;
+                        $('#msgErrEmail').html('');
+                    }
+                }
+                if (mail == 0 && phone == 0 && p == 0 && $("#txtEmail").val()!='' && $('#txtPwd').val()!='') {
+                  $("#btnCreate").prop("disabled",false);
+                }    
+                else{
+                  $("#btnCreate").prop("disabled",true);
+                }            
+            });
+            $("#txtPhone").keyup(function () {                
+                var phoneList = <?php echo json_encode($phoneArray); ?>;
+                for(var i=0; i<phoneList.length; i++){
+                    if($("#txtPhone").val()==phoneList[i]){
+                        phone = 1;
+                        $('#msgErrPhone').html('<br>លេខទូរសព្ទ័នេះបានធ្វើការបង្កើតគណនីរួចហើយ').css('color', 'red');
+                        break;
+                    }
+                    else{
+                        phone = 0;
+                        $('#msgErrPhone').html('');
+                    }
+                } 
+                if (mail == 0 && phone == 0 && p == 0 && $("#txtEmail").val()!='' && $('#txtPwd').val()!='') {
+                  $("#btnCreate").prop("disabled",false);
+                }    
+                else{
+                  $("#btnCreate").prop("disabled",true);
+                }                 
+            });            
+            
+            $("#txtConfirmPwd").focusout(function () {
+                if ($('#txtPwd').val() == $('#txtConfirmPwd').val()) {
+                    $('#error-Msg').html('');
+                    p = 0;
+                } else {
+                    $('#error-Msg').html('ការផ្ទៀងផ្ទាត់លេខសម្ងាត់មិនត្រឹមត្រូរទេ').css('color', 'red');
+                    p = 1;
+                }
+                if (mail == 0 && phone == 0 && p == 0 && $("#txtEmail").val()!='' && $('#txtPwd').val()!='') {
+                  $("#btnCreate").prop("disabled",false);
+                }   
+                else{
+                  $("#btnCreate").prop("disabled",true);
+                }   
+            });
+            $("#txtConfirmPwd").keydown(function () {
+                $('#error-Msg').html('');
+                p = 0;
+            });
 
+            $("#btnCreate").on("click", function () {
+                alert("User ឈ្មោះ: "+$("#txtLastName").val()+" "+""+$("#txtFirstName").val()+" ត្រូវបានបង្កើតដោយជោគជ័យ");
+            });
+        });
+    </script>
     
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-    //connect to database
+    //connect to database 
     include '../php/connectToDb.php';
     $obj = new DB();
     $con = $obj->conDb();

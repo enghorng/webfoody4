@@ -194,19 +194,19 @@
         <!-- col2 -->
         
         <div class="col-lg-10 col-md-8 col-sm-7 col-7" style="padding-top: 40px;">
-          <form action="">
+          <form action="" method="POST">
           
             <div class="row">
               <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-left" style="margin-bottom: 10px;">
                 <h4 class="text-success"> ព័ត៌មានអ្នកប្រើប្រាស់ <h4>
               </div>
-              <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-right" style="margin-bottom: 10px;">
-                <button type="button" class="btn btn-danger btn-md" id="deleteUser" style="width: 100px;" disabled>លុប</button>
-              </div>
+              <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-right" style="margin-bottom: 10px;">
+                <button type="submit" class="btn btn-danger btn-md" id="btnDelete" style="width: 100px;" disabled>លុប</button>
+              </div> -->
             </div>
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                  <table class="table table-bordered">
+                  <table class="table table-bordered" id="deleteUser">
                     <thead style="text-align: center;">
                       <tr class="thead-light">
                         <th scope="col" style="width: 10%;">#</th>
@@ -237,14 +237,8 @@
                             else{
                               $colName = '<a href="#m" type="submit" data-toggle="modal" data-target="#userModal" id="'.$user["UserCode"].'" onClick="rolet(this.id)">'.$user["LastName"].''." ".''.$user["FirstName"].'</a>';
                             }
-                            echo '<tr style="text-align: center;">
-                                    <th scope="row">
-                                      <div class="form-check">
-                                        <label class="form-check-label">
-                                          <input type="checkbox" class="form-check-input" value="" id="chk">'.$num.'
-                                        </label>
-                                      </div>
-                                    </th>                            
+                            echo '<tr style="text-align: center;">   
+                                    <td>'.$num.'</td>                         
                                     <td>'.$colName.'</td>
                                     <td>'.$user["Gender"].'</td>
                                     <td>'.$user["Email"].'</td>
@@ -290,17 +284,17 @@
                               }
                             });
                           });
-                          $("#chk").click(function(){
-                            $('#deleteUser').prop('disabled', false);
-                          });
-                          $("#chk").unclick(function(){
-                            $('#deleteUser').prop('disabled', true);
-                          });
-                          $("#deleteUser").click(function(){
-
-                            // alert($('input[type="checkbox"]:checked').length);
+                          
+                          $("#btnDelete").click(function(){
+                            var code = [];
+                              $.each($("input[type='checkbox']:checked"), function(){
+                                code.push($(this).val());
+                              });
                           });
                         });
+                        function chDelete(){
+                          $('#btnDelete').prop('disabled', false);
+                        }
                       </script>
                     <!-- userModel -->
                     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
