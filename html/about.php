@@ -139,16 +139,14 @@
 
       <div class="container big">
           <div class="row foodbk">
-              <div class="col-lg-7 col-md-7 col-sm-12 col-12">
-                  <img src="../images/About/aboutBackground.jpg" alt="Teacher web image">
-              </div>
+              <div class="col-lg-7 col-md-7 col-sm-12 col-12">s</div>
               <div class="col-lg-5 col-md-5 col-sm-12 col-12" style="padding-top: 120px;">
                 <h2 class="text-center">ចង់ដឹងពីរបៀបចម្អិនម្ហូបមែនទេ?​</h2>
-                <p style="padding:30px; line-height: 28px; font-size: 14px; color: blue;">
-                    វេបសាយ QuickCook អាចជួយលោកអ្នកបាន។
+                <p style="padding:30px; line-height: 28px; font-size: 14px;">
+                    វេបសាយ QuickFood អាចជួយលោកអ្នកបាន។
                     ម្ហូបឆ្ងាញ់ មិនមែនមានន័យថាត្រូវពិបាកចម្អិននោះទេ 
                     សំខាន់គឹដឹងពីគឿងផ្សំ និងរបៀបធ្វើទៅតាមម្ហូបនីមួយៗ។
-                    QuickCook នឹងជួយអោយការចម្អិនអាហាររបស់អ្នកកាន់តែងាយស្រួល រហ័ស
+                    QuickFood នឹងជួយអោយការចម្អិនអាហាររបស់អ្នកកាន់តែងាយស្រួល រហ័ស
                     ព្រមទាំងបង្កើនរសជាតិអាហារឱ្យកាន់តែឆ្ងាញ់ និងផ្តល់សុខភាពល្អជូនគ្រួសារលោកអ្នក។ 
                 </p>
               </div>

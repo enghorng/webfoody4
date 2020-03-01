@@ -189,7 +189,10 @@
         <!-- End-Col-1 -->
         
         <!-- col2 -->
-        <div class="col-lg-10 col-md-8 col-sm-7 col-7">
+        <div class="col-lg-10 col-md-8 col-sm-7 col-7"> 
+        <div class="col-lg-6 col-md-6 col-sm-4 col-12">
+                    <h4 class="text-lg-right text-sm-left​ text-success"​ style="margin-top:5%">ម្ហូប</h4>
+                </div>                   
             <div id="food-content" style="padding-top: 20px;"> 
               <div class="row food-large-title no-gutters">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-12">
@@ -207,12 +210,9 @@
                      <option value="User">យល់ព្រម<span style='color: green;'>&nbsp;&#9679;</span></option>
                      <option value="User">បដិសេធ<span style='color: red;'>&nbsp;&#9679;</span></option>
                    </select>
-                  </div>
+                  </div>   
      
-     
-                <div class="col-lg-6 col-md-6 col-sm-4 col-12">
-                    <h4 class="text-lg-right text-sm-left">ទាំងអស់</h4>
-                </div>
+                
                 
             </div>  
             

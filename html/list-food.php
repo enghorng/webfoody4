@@ -175,7 +175,7 @@
         <div style="float: right; padding-right: 10px;"><a href="../html/list-food.php" class="text-success">
             <h6>បញ្ជីម្ហូប</h6>
           </a></div>
-        <div style="float: right;"><a href="../html/add-food.html" class="text-primary">
+        <div style="float: right;"><a href="../html/add-food.php" class="text-primary">
             <h6>បន្ថែមម្ហូប</h6>
           </a></div>
       </div>
@@ -246,7 +246,7 @@
                       //expect html to be returned  
                       data: {filter:''+all},         
                     success: function(data){                    
-                        $("#viewFood1").html(data); 
+                        $("#viewFood1").php(data); 
                         // alert(data);
                     }
                 });
@@ -257,7 +257,7 @@
                     dataType: "html",  
                       data: {filter:''+all},         
                     success: function(data){                    
-                        $("#totalFood").html(data); 
+                        $("#totalFood").php(data); 
                     }
                 });
             });

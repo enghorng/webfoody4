@@ -190,6 +190,11 @@
         
         <!-- col2 -->
         <div class="col-lg-10 col-md-8 col-sm-7 col-7">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <center>
+                    <h4 class="​ text-success"​ style="margin-top:5%">ម្ហូបដែលបានដាក់ស្នើ</h4>
+                    </center>
+                </div> 
             <div id="request-content" style="padding-top: 20px;"> 
               <div class="row food-large-title no-gutters">
 
@@ -202,9 +207,7 @@
                  </select>
                 </div>
 
-                <div class="col-lg-9 col-md-9 col-sm-9 col-12">
-                    <h4 class="text-lg-right text-sm-left">ទាំងអស់</h4>
-                </div>
+                
                 
             </div> 
               
