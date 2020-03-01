@@ -170,7 +170,7 @@
                         <div class="collapse" id="submenu1" aria-expanded="false">
                             <ul class="flex-column pl-2 nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#" ><span>បង្កើតគណនីយថ្មី</span></a>
+                                    <a class="nav-link" href="#" ><span>បង្កើតគណនីថ្មី</span></a>
                                 </li>
                                 <div class="dropdown-divider"></div>
                                 <li class="nav-item">
@@ -191,6 +191,9 @@
         <!-- col2 -->
         <div class="col-lg-10 col-md-8 col-sm-7 col-7" style="padding-top: 40px; padding-left: 100px;">
             <form action="">
+                    <div class="form-group row searchme">
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group"> <h4 class="text-success"> បង្កើតគណនីថ្មី <h4> </div>
+                    </div>
                     <div class="form-group row searchme">
                         <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
                             <label class="col-form-label control-label">ឈ្មោះ</label>
