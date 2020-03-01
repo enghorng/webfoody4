@@ -42,7 +42,7 @@
         $in = isset($_POST[$ingredient[$j]]) ? $_POST[$ingredient[$j]] : '';
         $q = isset($_POST[$qty[$j]]) ? $_POST[$qty[$j]] : '';
         if($in!=''){
-          $con->query("INSERT INTO tblingredient(FoodCode,Ingredient,Qty) VALUE('".$foodcode."',N'".$in."',N'".$q."')");
+          $con->query("INSERT INTO tblingredient(FoodCode,Ingredient,Qty) VALUES('".$foodcode."',N'".$in."',N'".$q."')");
         }
       }
 
@@ -52,14 +52,20 @@
         $recipe[$i] = "recipe".$i;
         $r = isset($_POST[$recipe[$i]]) ? $_POST[$recipe[$i]] : '';
         if($r!=''){
-          $con->query("INSERT INTO tblrecipe(FoodCode,Recipe) VALUE('".$foodcode."',N'".$r."')");
+          $con->query("INSERT INTO tblrecipe(FoodCode,Recipe) VALUES('".$foodcode."',N'".$r."')");
         }
       }
 
+      //Insert Food Note
+      $foodNote = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
+      $con->query("INSERT INTO tblfoodnote(FoodCode,Note) VALUES('".$foodcode."',N'".$foodNote."')");
+
+      //Insert Food information
       $insert = "INSERT INTO tblfood(`FoodCode`,`FoodName`, `Category`, `FoodType`, `Country`, `Province`, `VideoLink`, `FoodImage`, `FoodDate`, 
                                       `UserCode`, `Status`) VALUES('".$foodcode."',N'".$foodname."','".$category."','".$type."','".$country."',N'".$province."',
                                                                     '".$link."','".$photo."','".$date."','".$usercode."',2)";
       
+      move_uploaded_file($_FILES['photo']['tmp_name'],"../images/".$category."/".$_FILES['photo']['name']);
       $con->query($insert);
       header("Refresh:0");
     }
@@ -414,7 +420,7 @@
 
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"
+        <textarea class="form-control" id="txtFoodNote" rows="5"
           style="resize: none; font-family: KhmerOSbattambang;"></textarea>
       </div>
     </div>
