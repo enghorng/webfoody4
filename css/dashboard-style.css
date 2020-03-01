@@ -1,0 +1,36 @@
+.res-circle {
+    /* text-align: center; */
+    border-radius: 50%;
+    width: 85%;
+    line-height: 0;
+    background-image: linear-gradient(to right, #1488CC , #2B32B2);
+    /* NECESSARY FOR TEXT */
+    position: relative;
+  }
+  .res-circle:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+  .circle-txt {
+    position: absolute;
+    bottom: 55%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    /* NOT IMPORTANT */
+    font-family: "KhmerOSbattambang";
+  }
+  .circle-txt2{
+    position: absolute;
+    bottom: 45%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    /* NOT IMPORTANT */
+    font-family: "KhmerOSbattambang";
+    /* margin-top: 10%; */
+  }
+  .dashboardbk{
+    background-color: #74ebd5;
+  }
