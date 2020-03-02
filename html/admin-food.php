@@ -315,10 +315,10 @@
 
                 echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
                         <div class="food-div">
-                        <a href="food-detail.php?food-id='.$food['FoodCode'].'">
+                        <a href="checkFood.php?food-id='.$food['FoodCode'].'">
                         <img class="card-img-top" src="../images/'.$food['Category'].'/'.$food['FoodImage'].'"></a>
                         </div>
-                        <a href="food-detail.php?food-id='.$food['FoodCode'].'"><h6>'.$food['FoodName'].'</h6></a>
+                        <a href="checkFood.php?food-id='.$food['FoodCode'].'"><h6>'.$food['FoodName'].'</h6></a>
                         <span style="color: '.$color.';" class="text-right">&nbsp;&#9679;</span>
                       </div>';                                                     
             }

@@ -222,17 +222,62 @@
           <div class="row food-large-title no-gutters">
 
             <div class="col-lg-3 col-md-3 col-sm-3 col-12">
-              <select class="form-control" style="font-family: KhmerOSbattambang;">
-                <option value="User">ទាំងអស់</option>
-                <option value="Admin">ម្ហូប</option>
-                <option value="User">បង្អែម</option>
-                <option value="User">ភេសជ្ជ:</option>
-              </select>
+            <select class="form-control" style="font-family: KhmerOSbattambang;" id="dropdown-category">
+          <option value="category">ទាំងអស់</option>
+          <option value="food">ម្ហូប</option>
+          <option value="sweet">បង្អែម</option>
+          <option value="drink">ភេសជ្ជ:</option>
+        </select> 
             </div>
 
 
 
           </div>
+          <script>
+          $(document).ready(function () {
+            var c;
+            $("#dropdown-category, #dropdown-status").change(function(){
+              var category = $("#dropdown-category").val();
+              var status = $("#dropdown-status").val();
+
+                if(category=="food"){
+                  c = 1;
+                  ca = "ម្ហូប";
+                }
+                else if(category=="sweet"){
+                  c = 2;
+                }
+                else if(category=="drink"){
+                  c = 3;
+                }
+                else{
+                  c = '';
+                }
+
+                $.ajax({    //create an ajax request to display.php
+                    type: "GET",
+                    url: "../php/listFoodFilterRequest.php",             
+                    dataType: "html",  
+                      //expect html to be returned  
+                      data: {filter:''+c},         
+                    success: function(data){                    
+                        $("#viewFood1").html(data); 
+                        // alert(data);
+                    }
+                });
+
+                $.ajax({    //create an ajax request to display.php
+                    type: "GET",
+                    url: "../php/totalListFoodRequest.php",             
+                    dataType: "html",  
+                      data: {filter:''+c},         
+                    success: function(data){                    
+                        $("#totalFood").html(data); 
+                    }
+                });
+            });
+          });
+        </script>
 
           <!-- Food-all-here -->
           <div class="row" id="viewFood1">
@@ -269,7 +314,10 @@
 
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12 total-food">
-              <p>ចំនួនមុខម្ហូបសរុប៖ 15/300</p>
+              <p id="totalFood">ចំនួនមុខម្ហូបសរុប៖ 
+              <?php
+                      echo  count($total);
+                  ?></p>
             </div>
           </div>
 
@@ -277,7 +325,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
               <nav aria-label="Fodd Page navigation">
                 <ul class="pagination justify-content-center pagination pagination-lg">
-                  <li class="page-item">
+                  <!-- <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                       <span class="sr-only">Previous</span>
@@ -291,7 +339,7 @@
                       <span aria-hidden="true">&raquo;</span>
                       <span class="sr-only">Next</span>
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
               </nav>
             </div>

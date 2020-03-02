@@ -25,24 +25,11 @@
         $c = "Drink";
     }
 
-    if($all== 5 || $all == 15 || $all == 25 || $all == 35){
-        $s = 1;
-    }    
-    else if($all== 6 || $all == 16 || $all == 26 || $all == 36){
-        $s = 3;
-    }
-
     if($all==''){
-        $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Status !=2 ORDER BY FoodDate DESC");    
+        $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Status =2 ORDER BY FoodDate DESC");    
     }
-    else if($c!='' && $s!=''){    
-        $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Category = '".$c."' and Status = '".$s."' ORDER BY FoodDate DESC");    
-    }
-    else if($c!='' && $s==''){
-        $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Category = '".$c."' ORDER BY FoodDate DESC");    
-    }
-    else if($c=='' && $s!=''){
-        $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Status = '".$s."' ORDER BY FoodDate DESC");    
+    else{
+        $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Category = '".$c."' and Status = 2 ORDER BY FoodDate DESC");    
     }
     
     if ($foodSql->num_rows > 0) {         
@@ -50,11 +37,8 @@
             if($count == 15) break;
             $count++;
             //Check Status
-            if($food["Status"]==3){
-              $color = "red";
-            }
-            else if($food["Status"]==1){
-              $color = "green";
+            if($food["Status"]==2){
+              $color = "blue";
             }
 
             echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">

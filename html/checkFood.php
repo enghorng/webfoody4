@@ -19,6 +19,18 @@
     $category = $food["Category"];
     $type = $food["FoodType"];
     $country = $food["Country"];
+    $st = $food["Status"];
+    if($st==1){
+      $st1 = "យល់ព្រម";
+    }
+    else if($st==2){
+      
+      $st1 = "រងចាំការត្រួតពិនិត្យ";
+    }
+    else{
+      
+      $st1 = "បដិសេធ";
+    }
 
     if($type=='Sweet'){
       $type = "បង្អែម";
@@ -64,6 +76,8 @@
     //Select Note Info
     $noteSql = $con->query("SELECT * FROM `tblfoodnote` WHERE `FoodCode`='".$foodCode."'");
     $note = $noteSql->fetch_assoc();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,7 +248,7 @@
               </div>
               <div class="col-lg-5 col-md-4 col-sm-6 col-sm-12" style="padding-left: 50px;">
                 <h2><?php echo $food["FoodName"] ?></h2>
-                <label  id="statuschanged" style="color: blue; float: right; font-family: 'Khmer OS Battambang';"><i> រងចាំការត្រួតពិនិត្យ </i></label>
+                <label  id="statuschanged" style="color: blue; float: right; font-family: 'Khmer OS Battambang';"><i> <?php echo $st1 ?> </i></label>
                 <br><br>
                   <h5>គ្រឿងផ្សំ</h5>
                   <ul class="cooking-gradient">
