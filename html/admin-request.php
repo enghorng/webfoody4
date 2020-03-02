@@ -4,6 +4,7 @@
     $obj = new DB();
     $con = $obj->conDb();
     $con->query('SET character_set_results=utf8');
+    $total[] = array();
 
     //Disply User Name
     $sql = $con->query("SELECT * FROM `tblcheckrole` WHERE id = 1");    
@@ -316,7 +317,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-12 total-food">
               <p id="totalFood">ចំនួនមុខម្ហូបសរុប៖ 
               <?php
-                      echo  count($total);
+                      echo  count($total)-1;
                   ?></p>
             </div>
           </div>
