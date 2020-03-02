@@ -88,7 +88,7 @@
                   <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
-                  <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+                  <a class="dropdown-item display-none" href="dashboard.php" id="dropdownAdmin">រដ្ឋបាល</a>
                   <?php  
                       if($role==0){
                           echo '<script type="text/javascript">
@@ -138,10 +138,20 @@
                     }           
                 ?>               
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-          </form>
+          <div class="topnav-centered">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2 searchme" type="search" id="txtSearch" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 text-white" id="btnSearch" type="submit">ស្វែងរក</button>
+                </form>
+            </div>
+            <script>
+        $(document).ready(function () {
+            $("#btnSearch").click(function(){
+                var txt = $("#txtSearch").val();
+                window.open("globalsearch.php?s="+txt, "_blank");
+            });
+        });
+    </script>
         </div>
       </nav>
       <!-- End Menu -->

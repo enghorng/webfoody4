@@ -1,4 +1,5 @@
 <?php
+    $id = $_GET["id"];
     //connect to database
     include '../php/connectToDb.php';
     $obj = new DB();
@@ -11,82 +12,53 @@
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
     $usercode = $roleSql["UserCode"];
+    $photo = isset($_FILES['userphoto']['name']) ? $_FILES['userphoto']['name'] : '';
 
-    //Select User's Email and Phone
-    $sql = $con->query("SELECT Email, Phone FROM `tbluser`");
-
-    while($i = $sql->fetch_assoc()){
-        $emailArray[] = $i["Email"];
-        if($i["Phone"]=='' || $i["Phone"]== null) continue;
-        else $phoneArray[] = $i["Phone"];
-    }
-
-    //Insert New User Account
+    //Select All User
+    $user = ($con->query("SELECT * FROM `tbluser` WHERE UserCode='".$id."'"))->fetch_assoc();; 
+    
     if (!empty($_POST)) {
       $firstName = $_POST["txtFirstName"]; 
       $lastName = $_POST["txtLastName"]; 
       $gender = $_POST["rdoGender"];
-      $email = $_POST["txtEmail"]; 
+      $email = $_POST["txtEmail"];
       $phone = $_POST["txtPhone"]; 
-      $pwd = $_POST["txtPwd"];
-      $userCode = "U";
-      date_default_timezone_set("America/New_York");
-      $date = date("y/m/d h:i:s");
-
-      // Translate from English to Khmer
-      if($gender=='Female'){
-          $gender = 'ស្រី';
-          $photo = "Female.png";
-      }
-      else{
-          $gender = 'ប្រុស';
-          $photo = "Male.png";
+      if($photo==''){
+        $photo = $user["UserImage"];
       }
 
-      $con->query('SET character_set_results=utf8');
+      // //Insert Statement
+      $sql = "UPDATE `tbluser` SET `FirstName`=N'".$firstName."', `LastName`=N'".$lastName."', `Gender`=N'".$gender."',
+             `Email`='".$email."',`Phone`='".$phone."', UserImage='".$photo."' WHERE UserCode='".$_GET["id"]."'";
+      if($photo==''){
+        $file = $user["UserImage"];
+        move_uploaded_file($file,"../images/User/".$file);
+      }else{
+        move_uploaded_file($_FILES['userphoto']['tmp_name'],"../images/User/".$_FILES['userphoto']['name']);
+      }
 
-      //Select the largest id number 
-      $idSql=$con->query("SELECT id FROM `tbluser` ORDER BY id DESC LIMIT 1");
-      $maxID = $idSql->fetch_assoc();
-      $maxID["id"] = $maxID["id"] + 1;
-      if($maxID["id"]< 10){
-          $userCode = $userCode."00".$maxID["id"];
+      if ($con->query($sql) === TRUE) { 
+      header("Refresh:0");
       }
-      elseif($maxID["id"]< 100){
-          $userCode = $userCode."0".$maxID["id"];
-      }
-      else{
-          $userCode = $userCode.$maxID["id"];
-      }
-    
-        // //Insert Statement
-        $sql = "INSERT INTO `tbluser`(`UserCode`, `FirstName`, `LastName`, `Gender`, `Email`, 
-                `Phone`, `Pwd`,`UserImage`,`RegisterDate`, `Status`,`Role`) VALUES ('".$userCode."',N'".$firstName."',
-                N'".$lastName."',N'".$gender."','".$email."','".$phone."','".$pwd."','".$photo."','".$date."',1,1)";
-        // echo $sql;
-        if ($con->query($sql) === TRUE) { 
-          header("Refresh:0");
-        }
+
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="../css/aboutstyle.css">
-  <link rel="stylesheet" href="../css/index_style.css">
-  <link rel="stylesheet" href="../css/backToTop.css">
-  <link rel="stylesheet" href="../css/foodstyle.css">
-  <link rel="stylesheet" href="../css/sidenav.css">
-  <link rel="stylesheet" href="../css/food-detail-style.css">
-  <link rel="stylesheet" href="../css/add-food-style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aboutstyle.css">
+    <link rel="stylesheet" href="../css/create-account-style.css">
+    <link rel="stylesheet" href="../css/index_style.css">
+    <link rel="stylesheet" href="../css/backToTop.css">
+    <link rel="stylesheet" href="../css/foodstyle.css">
+    <link rel="stylesheet" href="../css/sidenav.css">
+    <link rel="stylesheet" href="../css/add-food-style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -95,38 +67,24 @@
   <!-- link for media -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <!-- end link for media -->
 
+  
 </head>
 <script src="../js/backToTop.js"></script>
 <script src="../js/sidenav.js"></script>
-<script src="../js/add-food.js"></script>
 <style>
-  button {
-    font-family: "Khmer OS Battambang";
-    background-color: #FB8442;
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .display-none {
+    button{
+          font-family: "Khmer OS Battambang";
+          background-color: #FB8442;
+      }
+      .display-none {
     display: none;
   }
-
-  select {
-    background-color: #222;
-    color: white;
-  }
 </style>
-
-<body>
-  <!-- Menu-bar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
+<body onload="loadPage()">
+    <!-- Menu-bar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
     <a class="navbar-brand" href="../index.php">
       <img src="../images/Icon/foodlogo.png" alt="">
     </a>
@@ -231,48 +189,57 @@
       <div class="row">
         <!-- col1 -->
         <div class="col-lg-2 col-md-4 col-sm-5 col-5 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar" style="border-right:2px solid lightgray">
-        <ul class="nav flex-column flex-nowrap">
-              <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#"><h3 style="padding-top: 30px; padding-bottom: 20px;">រដ្ឋបាល</h3></a></li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#submenu1" data-target="#submenu1" data-toggle="collapse">អ្នកប្រើប្រាស់&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a>
-                        <div class="collapse" id="submenu1" aria-expanded="false">
-                            <ul class="flex-column pl-2 nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="admin.php" ><span>បង្កើតគណនីយថ្មី</span></a>
-                                </li>
-                                <div class="dropdown-divider"></div>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="user-info.php" ><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                </li>
+            <ul class="nav flex-column flex-nowrap">
+              <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#">
+                <h3 style="padding-top: 30px; padding-bottom: 20px;"><?php echo $user["LastName"].' '.$user["FirstName"] ?></h3></a></li>
+              <li class="nav-item"><a class="nav-link text-truncate" href="" id="btnChangeInfo">ព័ត៌មានផ្ទាល់ខ្លួន</a></li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="admin-food.php">ម្ហូប</a></li>
-                <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="admin-request.php">ការស្នើសុំ</a></li>
-                <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="dashboard.php">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="edit-password.php?id=<?php echo $id ?>" id="btnChangePass">លេខសម្ងាត់</a></li>
                 <div class="dropdown-divider"></div>
             </ul>
         </div>
         <!-- End-Col-1 -->
         
         <!-- col2 -->
-        <div class="col-lg-10 col-md-8 col-sm-7 col-7" style="padding-top: 40px; padding-left: 100px;">
-            <form action="" method="POST">
+        <div class="col-lg-10 col-md-8 col-sm-7 col-7" style="padding-top: 40px;" id="edit-info">
+            <div class="row" style="margin-bottom: 20px; margin-top: 10px;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h4>ព័ត៌មានផ្ទាល់ខ្លួន</h4>
+                </div>
+            </div>
+            <form action="" method="POST" enctype='multipart/form-data'>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-primary btn-file">
+                              ដាក់រូបភាព..<input type="file" id="imgInp" name="userphoto">
+                            </span>
+                        </span>
+                        <input type="text" class="form-control" readonly style="font-family: KhmerOSbattambang;" id="txtPhoto">
+                    </div>
+                      <div class="img-fluid box-photo-upload">
+                        <img src="../images/User/<?php echo $user["UserImage"] ?>"  id='img-upload' />
+                      </div>                     
+                  </div>
+                  
+                  </div>
+                <div class="col-lg-8 coj-md-4 col-sm-12 col-12">
                     <div class="form-group row searchme">
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group"> <h4 class="text-success"> បង្កើតគណនីថ្មី <h4> </div>
                     </div>
                     <div class="form-group row searchme">
                         <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
                             <label class="col-form-label control-label">ឈ្មោះ</label>
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-12 col-12">
-                            <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" placeholder="នាមខ្លួន" autofocus required>
+                            <input type="text" class="form-control" id="txtFirstName" name="txtFirstName" placeholder="នាមខ្លួន" 
+                                    value="<?php echo $user["FirstName"] ?>" autofocus required>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                            <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="នាមត្រកូល" required>
+                            <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="នាមត្រកូល"
+                                    value="<?php echo $user["LastName"] ?>" required>
                         </div>
                     </div>
 
@@ -281,10 +248,10 @@
                             <label class="col-form-label">ភេទ</label>
                         </div>
                         <div class="col-lg-2 col-md-3 col-sm-6 col-6">
-                            <input type="radio" name="rdoGender" value="Male" checked>ប្រុស
+                            <input type="radio" id="rdoMale" name="rdoGender" value="ប្រុស">ប្រុស
                         </div>
                         <div class="col-lg-7 col-md-6 col-sm-6 col-6">
-                            <input type="radio" name="rdoGender" value="Female">ស្រី
+                            <input type="radio" id="rdoFemale" name="rdoGender" value="ស្រី">ស្រី
                         </div>
                     </div>
 
@@ -293,7 +260,8 @@
                             <label class="col-form-label control-label">អ៊ីម៉ែល</label>
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="example@gmail.com" required>
+                            <input type="email" class="form-control" id="txtEmail" name="txtEmail" 
+                                  value="<?php echo $user["Email"] ?>" placeholder="example@gmail.com" required>
                             <p id="msgErrEmail"><p>
                         </div>
                     </div>
@@ -303,36 +271,19 @@
                             <label class="col-form-label control-label">លេខទូរស័ព្ទ</label>
                         </div>
                         <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="number" class="form-control" id="txtPhone" name="txtPhone" placeholder="">
+                            <input type="number" class="form-control" id="txtPhone" name="txtPhone" 
+                                    value="<?php echo $user["Phone"] ?>" placeholder="">
                             <p id="msgErrPhone"><p>
                         </div>
                     </div>
 
-                    <div class="form-group row searchme">
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
-                            <label class="col-form-label control-label">លេខសម្ងាត់</label>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="password" class="form-control" id="txtPwd" name="txtPwd" placeholder="" required>
-                        </div>
-                    </div>
+    
+                        <div class="text-right" style="margin-top: 30px; padding-bottom: 30px;">
+                            <button type="submit" class="btn btn-primary">កែប្រែ</button>
+                          </div>
+                </div>
+            </div>
 
-                    <div class="form-group row searchme">
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-12 form-group required">
-                            <label class="col-form-label control-label">ផ្ទៀងផ្ទាត់លេខសម្ងាត់</label>
-                        </div>
-                        <div class="col-lg-9 col-md-9 col-sm-12 col-12">
-                            <input type="password" class="form-control" id="txtConfirmPwd" name="txtConfirmPwd" placeholder="" required>
-                            <p id="error-Msg" class="info"></p>
-                        </div>
-                    </div>
-
-                    
-
-                    <div class="text-right" style="margin-top: 30px; padding-bottom: 30px;">
-                        <button type="submit" id="btnCreate" class="btn btn-primary" disabled>បង្កើត</button>
-                      </div>
-            </form>
         </div>
         <!-- End-Col-2 -->
     </div>
@@ -372,77 +323,89 @@
         <i class="fa fa-chevron-up" style="color: whitesmoke;"></i>
     </a>
     <!-- End bottom to top -->
+
     <script>
-        $(document).ready(function () {
-            var mail = 0;
-            var phone = 0;
-            var p = 0;
-            $("#txtEmail").keyup(function () {                
-                var emailList = <?php echo json_encode($emailArray); ?>;
-                for(var i=0; i<emailList.length; i++){
-                    if($("#txtEmail").val()==emailList[i]){
-                        mail = 1;
-                        $('#msgErrEmail').html('<br>អ៊ីមែលនេះបានធ្វើការបង្កើតគណនីរួចហើយ').css('color', 'red');
-                        break;
-                    }
-                    else{
-                        mail = 0;
-                        $('#msgErrEmail').html('');
-                    }
-                }
-                if (mail == 0 && phone == 0 && p == 0 && $("#txtEmail").val()!='' && $('#txtPwd').val()!='') {
-                  $("#btnCreate").prop("disabled",false);
-                }    
-                else{
-                  $("#btnCreate").prop("disabled",true);
-                }            
+
+        $(document).ready( function() {
+              $(document).on('change', '.btn-file :file', function() {
+            var input = $(this),
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
             });
-            $("#txtPhone").keyup(function () {                
-                var phoneList = <?php echo json_encode($phoneArray); ?>;
-                for(var i=0; i<phoneList.length; i++){
-                    if($("#txtPhone").val()==phoneList[i]){
-                        phone = 1;
-                        $('#msgErrPhone').html('<br>លេខទូរសព្ទ័នេះបានធ្វើការបង្កើតគណនីរួចហើយ').css('color', 'red');
-                        break;
-                    }
-                    else{
-                        phone = 0;
-                        $('#msgErrPhone').html('');
-                    }
-                } 
-                if (mail == 0 && phone == 0 && p == 0 && $("#txtEmail").val()!='' && $('#txtPwd').val()!='') {
-                  $("#btnCreate").prop("disabled",false);
-                }    
-                else{
-                  $("#btnCreate").prop("disabled",true);
-                }                 
-            });            
-            
-            $("#txtConfirmPwd").focusout(function () {
-                if ($('#txtPwd').val() == $('#txtConfirmPwd').val()) {
-                    $('#error-Msg').html('');
-                    p = 0;
+        
+            $('.btn-file :file').on('fileselect', function(event, label) {
+                
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = label;
+                
+                if( input.length ) {
+                    input.val(log);
                 } else {
-                    $('#error-Msg').html('ការផ្ទៀងផ្ទាត់លេខសម្ងាត់មិនត្រឹមត្រូរទេ').css('color', 'red');
-                    p = 1;
+                    if( log ) alert(log);
                 }
-                if (mail == 0 && phone == 0 && p == 0 && $("#txtEmail").val()!='' && $('#txtPwd').val()!='') {
-                  $("#btnCreate").prop("disabled",false);
-                }   
-                else{
-                  $("#btnCreate").prop("disabled",true);
-                }   
+              
             });
-            $("#txtConfirmPwd").keydown(function () {
-                $('#error-Msg').html('');
-                p = 0;
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function (e) {
+                        $('#img-upload').attr('src', e.target.result);
+                    }
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#updatePwd").click(function(){
+              if($("#msgOldPwd").val()!='' || $("#msgConPwd").val()!='')
+                return false;
             });
 
-            $("#btnCreate").on("click", function () {
-                alert("User ឈ្មោះ: "+$("#txtLastName").val()+" "+""+$("#txtFirstName").val()+" ត្រូវបានបង្កើតដោយជោគជ័យ");
+            $("#btnChangePass").click(function(){
+              $("#edit-info").css("display", "none");
+              $("#edit-password").css("display", "block");
             });
-        });
-    </script>
+
+            $("#btnChangeInfo").click(function(){
+              $("#edit-info").css("display", "block");
+              $("#edit-password").css("display", "none");
+            });
+
+            $("#txtOldPwd").focusout(function(){
+              if($("#txtOldPwd").val() != <?php echo $user["Pwd"] ?>){
+                $("#msgOldPwd").html('<br>លេខសម្ងាត់មិនត្រឹមត្រូវទេ').css('color', 'red');
+              }
+              else{
+                $("#msgOldPwd").html('');
+              }
+            });
+
+            $("#txtConPwd").focusout(function(){
+              if($("#txtConPwd").val() != $("#txtNewPwd").val()){
+                $("#msgConPwd").html('<br>ការផ្ទៀងផ្ទាត់លេខសម្ងាត់មិនត្រឹមត្រូវទេ').css('color', 'red');
+              }
+              else{
+                $("#msgConPwd").html('');
+              }
+            });
+        
+            $("#imgInp").change(function(){
+                readURL(this);
+            }); 	
+          });
+          function loadPage(){
+            $g = "<?php echo $user["Gender"] ?>";
+            if($g=="ស្រី"){
+              document.getElementById("rdoFemale").checked = true;
+            }
+            else{
+              document.getElementById("rdoMale").checked = true;
+            }
+            //Photo Name
+            document.getElementById("txtPhoto").value = "<?php echo $user["UserImage"];?>";
+          }
+        </script>
     
 </body>
 </html>

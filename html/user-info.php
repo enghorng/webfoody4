@@ -103,7 +103,7 @@
             <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
-            <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+            <a class="dropdown-item display-none" href="dashboard.php" id="dropdownAdmin">រដ្ឋបាល</a>
             <?php  
                       if($role==0){
                           echo '<script type="text/javascript">
@@ -153,11 +153,21 @@
                     }           
                 ?>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-      </form>
-    </div>
+      <div class="topnav-centered">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2 searchme" type="search" id="txtSearch" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 text-white" id="btnSearch" type="submit">ស្វែងរក</button>
+                </form>
+            </div>
+            <script>
+        $(document).ready(function () {
+            $("#btnSearch").click(function(){
+                var txt = $("#txtSearch").val();
+                window.open("globalsearch.php?s="+txt, "_blank");
+            });
+        });
+    </script>
+        </div>
   </nav>
       <!-- End Menu -->
 
@@ -247,15 +257,14 @@
                                     <td class="display-none" id="img'.$user["UserCode"].'">'.$user["UserImage"].'</td>
                                     <td class="display-none" id="role'.$user["UserCode"].'">'.$user["Role"].'</td>
                                     <td>
-                                        <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
+                                        <a href="admin-edit-user.php?id='.$user["UserCode"].'"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
                                     </td>
                                   </tr>';
                           }
                         }
 
                       ?>  
-                      <script>
-                        
+                      <script>                        
                         var id;
                         function rolet(d){
                           id = d;
@@ -273,28 +282,17 @@
           
                         $(document).ready(function () {
                           $("#updateRole").click(function(){
-                            $.ajax({    //create an ajax request to display.php
+                            $.ajax({ 
                               type: "GET",
-                              url: "../php/changeUserRole.php",             
-                              dataType: "html",  
-                                //expect html to be returned  
+                              url: "changeUserRole.php",             
+                              dataType: "html",   
                                 data: {code:''+id},         
                               success: function(data){                    
                                   $("#rolechanged").html(data); 
                               }
                             });
                           });
-                          
-                          $("#btnDelete").click(function(){
-                            var code = [];
-                              $.each($("input[type='checkbox']:checked"), function(){
-                                code.push($(this).val());
-                              });
-                          });
                         });
-                        function chDelete(){
-                          $('#btnDelete').prop('disabled', false);
-                        }
                       </script>
                     <!-- userModel -->
                     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -341,7 +339,7 @@
     <div class="container-fluid" style="padding:30px; background-color: #043927;"">
         <div class="row" style="padding-top: 20px; text-align: center;">
             <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-                <img src="../images/foodlogo.png" alt="">
+                <img src="../images/Icon/foodlogo.png" alt="">
                 <div class="text-white">QuickCook</div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-12">

@@ -2,7 +2,7 @@
     $usercode = $_GET['code']; 
 
     //connect to database
-    include 'connectToDb.php';
+    include '../php/connectToDb.php';
     $obj = new DB();
     $con = $obj->conDb();
 

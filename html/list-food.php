@@ -110,7 +110,7 @@
             <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
-            <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+            <a class="dropdown-item display-none" href="dashboard.php" id="dropdownAdmin">រដ្ឋបាល</a>
             <?php  
                       if($role==0){
                           echo '<script type="text/javascript">
@@ -160,11 +160,21 @@
                     }           
                 ?>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-      </form>
-    </div>
+      <div class="topnav-centered">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2 searchme" type="search" id="txtSearch" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 text-white" id="btnSearch" type="submit">ស្វែងរក</button>
+                </form>
+            </div>
+            <script>
+        $(document).ready(function () {
+            $("#btnSearch").click(function(){
+                var txt = $("#txtSearch").val();
+                window.open("globalsearch.php?s="+txt, "_blank");
+            });
+        });
+    </script>
+        </div>
   </nav>
   <!-- End Menu -->
 
@@ -246,7 +256,7 @@
                       //expect html to be returned  
                       data: {filter:''+all},         
                     success: function(data){                    
-                        $("#viewFood1").php(data); 
+                        $("#viewFood1").html(data); 
                         // alert(data);
                     }
                 });
@@ -257,7 +267,7 @@
                     dataType: "html",  
                       data: {filter:''+all},         
                     success: function(data){                    
-                        $("#totalFood").php(data); 
+                        $("#totalFood").html(data); 
                     }
                 });
             });
@@ -353,7 +363,7 @@
   <div class="container-fluid" style="padding:30px; background-color: #043927;"">
         <div class=" row" style="padding-top: 20px; text-align: center;">
     <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-      <img src="../images/foodlogo.png" alt="">
+      <img src="../images/Icon/foodlogo.png" alt="">
       <div class="text-white">QuickCook</div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-12">

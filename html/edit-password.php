@@ -11,34 +11,34 @@
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
     $usercode = $roleSql["UserCode"];
+    $photo = isset($_FILES['userphoto']['name']) ? $_FILES['userphoto']['name'] : '';
 
-    //Select Food Information
-    $foodSql = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");    
-      
-    $foodSql1 = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");   
-    while($i = $foodSql1->fetch_assoc()){
-      $total[] = $i["FoodName"];
-    }  
-
-    $count = 0;
+    //Select All User
+    $user = ($con->query("SELECT * FROM `tbluser` WHERE UserCode='".$_GET["id"]."'"))->fetch_assoc();; 
+    
+    if (!empty($_POST)) {
+        $pwd = $_POST["txtNewPwd"];
+        if ($con->query("UPDATE tbluser SET Pwd='".$pwd."' WHERE UserCode='".$_GET["id"]."'") === TRUE) { 
+            header("Refresh:0");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="stylesheet" href="../css/aboutstyle.css">
-  <link rel="stylesheet" href="../css/index_style.css">
-  <link rel="stylesheet" href="../css/backToTop.css">
-  <link rel="stylesheet" href="../css/foodstyle.css">
-  <link rel="stylesheet" href="../css/sidenav.css">
-  <link rel="stylesheet" href="../css/food-detail-style.css">
-  <link rel="stylesheet" href="../css/add-food-style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/aboutstyle.css">
+    <link rel="stylesheet" href="../css/create-account-style.css">
+    <link rel="stylesheet" href="../css/index_style.css">
+    <link rel="stylesheet" href="../css/backToTop.css">
+    <link rel="stylesheet" href="../css/foodstyle.css">
+    <link rel="stylesheet" href="../css/sidenav.css">
+    <link rel="stylesheet" href="../css/add-food-style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -47,38 +47,24 @@
   <!-- link for media -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <!-- end link for media -->
 
+  
 </head>
 <script src="../js/backToTop.js"></script>
 <script src="../js/sidenav.js"></script>
-<script src="../js/add-food.js"></script>
 <style>
-  button {
-    font-family: "Khmer OS Battambang";
-    background-color: #FB8442;
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .display-none {
+    button{
+          font-family: "Khmer OS Battambang";
+          background-color: #FB8442;
+      }
+      .display-none {
     display: none;
   }
-
-  select {
-    background-color: #222;
-    color: white;
-  }
 </style>
-
-<body>
-  <!-- Menu-bar -->
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
+<body onload="loadPage()">
+    <!-- Menu-bar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #043927;">
     <a class="navbar-brand" href="../index.php">
       <img src="../images/Icon/foodlogo.png" alt="">
     </a>
@@ -183,126 +169,56 @@
       <div class="row">
         <!-- col1 -->
         <div class="col-lg-2 col-md-4 col-sm-5 col-5 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar" style="border-right:2px solid lightgray">
-        <ul class="nav flex-column flex-nowrap">
-              <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#"><h3 style="padding-top: 30px; padding-bottom: 20px;">រដ្ឋបាល</h3></a></li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#submenu1" data-target="#submenu1" data-toggle="collapse">អ្នកប្រើប្រាស់&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a>
-                        <div class="collapse" id="submenu1" aria-expanded="false">
-                            <ul class="flex-column pl-2 nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="admin.php" ><span>បង្កើតគណនីយថ្មី</span></a>
-                                </li>
-                                <div class="dropdown-divider"></div>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="user-info.php" ><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                </li>
+            <ul class="nav flex-column flex-nowrap">
+              <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#">
+                <h3 style="padding-top: 30px; padding-bottom: 20px;"><?php echo $user["LastName"].' '.$user["FirstName"] ?></h3></a></li>
+              <li class="nav-item"><a class="nav-link text-truncate" href="admin-edit-user.php?id=<?php echo $_GET["id"] ?>" id="btnChangeInfo">ព័ត៌មានផ្ទាល់ខ្លួន</a></li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="admin-food.php">ម្ហូប</a></li>
-                <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="admin-request.php">ការស្នើសុំ</a></li>
-                <div class="dropdown-divider"></div>
-                <li class="nav-item"><a class="nav-link text-truncate" href="dashboard.php">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="" id="btnChangePass">លេខសម្ងាត់</a></li>
                 <div class="dropdown-divider"></div>
             </ul>
         </div>
         <!-- End-Col-1 -->
-        
-        <!-- col2 -->
-        <div class="col-lg-10 col-md-8 col-sm-7 col-7"> 
-        <div class="col-lg-6 col-md-6 col-sm-4 col-12">
-                    <h4 class="text-lg-right text-sm-left​ text-success"​ style="margin-top:5%">ម្ហូប</h4>
-                </div>                   
-            <div id="food-content" style="padding-top: 20px;"> 
-              <div class="row food-large-title no-gutters">
-                <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-                 <select class="form-control" style="font-family: KhmerOSbattambang;">
-                   <option value="User">ទាំងអស់</option>
-                   <option value="Admin">ម្ហូប</option>
-                   <option value="User">បង្អែម</option>
-                   <option value="User">ភេសជ្ជ:</option>
-                 </select>
+        <!-- Password -->
+        <div class="col-lg-10 col-md-8 col-sm-7 col-7" style="padding-top: 40px;" id="edit-password">
+            <div class="row" style="margin-bottom: 20px; margin-top: 10px;">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h4>លេខសម្ងាត់</h4>
                 </div>
-                
-                  <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-                   <select class="form-control" style="font-family: KhmerOSbattambang;">
-                     <option value="User">ទាំងអស់</option>
-                     <option value="User">យល់ព្រម<span style='color: green;'>&nbsp;&#9679;</span></option>
-                     <option value="User">បដិសេធ<span style='color: red;'>&nbsp;&#9679;</span></option>
-                   </select>
-                  </div>   
-     
-                
-                
-            </div>  
-            
-            <!-- Food-all-here -->
-            <div class="row" id="viewFood1">
-      <?php
-        if ($foodSql->num_rows > 0) {         
-            while($food = $foodSql->fetch_assoc()) {
-                if($count == 15) break;
-                $count++;
-                //Check Status
-                if($food["Status"]==0){
-                  $color = "red";
-                }
-                else if($food["Status"]==1){
-                  $color = "green";
-                }
-                else if($food["Status"]==2){
-                  $color = "blue";
-                }
-
-                echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
-                        <div class="food-div">
-                        <a href="food-detail.php?food-id='.$food['FoodCode'].'">
-                        <img class="card-img-top" src="../images/'.$food['Category'].'/'.$food['FoodImage'].'"></a>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                   <form action="" method="POST">
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-lg-3 col-sm-2 col-form-label">លេខសម្ងាត់ចាស់</label>
+                        <div class="col-lg-9" style="font-family: KhmerOSbattambang;">
+                          <input type="password" class="form-control" id="txtOldPwd" name="txtOldPwd" placeholder="លេខសម្ងាត់ចាស់">
+                          <p id="msgOldPwd"><p>
                         </div>
-                        <a href="food-detail.php?food-id='.$food['FoodCode'].'"><h6>'.$food['FoodName'].'</h6></a>
-                        <span style="color: '.$color.';" class="text-right">&nbsp;&#9679;</span>
-                      </div>';                                                     
-            }
-        }
-      ?>
-    </div>
-            <!-- End-Food-All -->
-            
-            
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-12 total-food">
-                    <p>ចំនួនមុខម្ហូបសរុប៖ 15/300</p>
-                </div>
-            </div>
-            
-              <div class="row" style="margin-top: 30px;">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <nav aria-label="Fodd Page navigation">
-                        <ul class="pagination justify-content-center pagination pagination-lg">
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                              <span aria-hidden="true">&laquo;</span>
-                              <span class="sr-only">Previous</span>
-                            </a>
-                          </li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                              <span class="sr-only">Next</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </nav>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPassword" class="col-lg-3 col-form-label">លេខសម្ងាត់ថ្មី</label>
+                        <div class="col-lg-9 col-sm-10" style="font-family: KhmerOSbattambang;">
+                          <input type="password" class="form-control" id="txtNewPwd" name="txtNewPwd" placeholder="លេខសម្ងាត់ថ្មី">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputPassword" class="col-lg-3 col-sm-2 col-form-label">ផ្ទៀងផ្ទាត់លេខសម្ងាត់</label>
+                        <div class="col-lg-9 col-sm-10" style="font-family: KhmerOSbattambang;">
+                          <input type="password" class="form-control" id="txtConPwd" name="txtConPwd" placeholder="ផ្ទៀងផ្ទាត់លេខសម្ងាត់">
+                          <p id="msgConPwd"><p>
+                        </div>
+                      </div>
+                      <div class="text-right" style="margin-top: 30px; padding-bottom: 30px;">
+                        <button type="submit" class="btn btn-primary" id="updatePwd" >កែប្រែ</button>
+                      </div>
+                   </form>
+                  
                   </div>
-              </div>
             </div>
-            <!-- End-food-content -->
+
         </div>
+        <!-- End Password -->
         <!-- End-Col-2 -->
     </div>
 
@@ -342,6 +258,88 @@
     </a>
     <!-- End bottom to top -->
 
+    <script>
+
+        $(document).ready( function() {
+              $(document).on('change', '.btn-file :file', function() {
+            var input = $(this),
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
+            });
+        
+            $('.btn-file :file').on('fileselect', function(event, label) {
+                
+                var input = $(this).parents('.input-group').find(':text'),
+                    log = label;
+                
+                if( input.length ) {
+                    input.val(log);
+                } else {
+                    if( log ) alert(log);
+                }
+              
+            });
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    
+                    reader.onload = function (e) {
+                        $('#img-upload').attr('src', e.target.result);
+                    }
+                    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#updatePwd").click(function(){
+              if($("#msgOldPwd").val()!='' || $("#msgConPwd").val()!='')
+                return false;
+            });
+
+            $("#btnChangePass").click(function(){
+              $("#edit-info").css("display", "none");
+              $("#edit-password").css("display", "block");
+            });
+
+            $("#btnChangeInfo").click(function(){
+              $("#edit-info").css("display", "block");
+              $("#edit-password").css("display", "none");
+            });
+
+            $("#txtOldPwd").focusout(function(){
+              if($("#txtOldPwd").val() != <?php echo $user["Pwd"] ?>){
+                $("#msgOldPwd").html('<br>លេខសម្ងាត់មិនត្រឹមត្រូវទេ').css('color', 'red');
+              }
+              else{
+                $("#msgOldPwd").html('');
+              }
+            });
+
+            $("#txtConPwd").focusout(function(){
+              if($("#txtConPwd").val() != $("#txtNewPwd").val()){
+                $("#msgConPwd").html('<br>ការផ្ទៀងផ្ទាត់លេខសម្ងាត់មិនត្រឹមត្រូវទេ').css('color', 'red');
+              }
+              else{
+                $("#msgConPwd").html('');
+              }
+            });
+        
+            $("#imgInp").change(function(){
+                readURL(this);
+            }); 	
+          });
+          function loadPage(){
+            $g = "<?php echo $user["Gender"] ?>";
+            if($g=="ស្រី"){
+              document.getElementById("rdoFemale").checked = true;
+            }
+            else{
+              document.getElementById("rdoMale").checked = true;
+            }
+            //Photo Name
+            document.getElementById("txtPhoto").value = "<?php echo $user["UserImage"];?>";
+          }
+        </script>
     
 </body>
 </html>

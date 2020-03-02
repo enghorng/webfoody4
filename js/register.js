@@ -5,7 +5,7 @@ $(document).ready(function () {
             $('#error-Msg').html('');
             $p = 0;
         } else {
-            $('#error-Msg').html('ការផ្ទៀងផ្ទាត់លេខសម្ងាត់មិនត្រឹមត្រូរទេ').css('color', 'red');
+            $('#error-Msg').html('ការផ្ទៀងផ្ទាត់លេខសម្ងាត់មិនត្រឹមត្រូវទេ').css('color', 'red');
             $p = 1;
         }
     });

@@ -110,7 +110,7 @@
             <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
-            <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+            <a class="dropdown-item display-none" href="dashboard.php" id="dropdownAdmin">រដ្ឋបាល</a>
             <?php  
                       if($role==0){
                           echo '<script type="text/javascript">
@@ -160,11 +160,21 @@
                     }           
                 ?>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-      </form>
-    </div>
+      <div class="topnav-centered">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2 searchme" type="search" id="txtSearch" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 text-white" id="btnSearch" type="submit">ស្វែងរក</button>
+                </form>
+            </div>
+            <script>
+        $(document).ready(function () {
+            $("#btnSearch").click(function(){
+                var txt = $("#txtSearch").val();
+                window.open("globalsearch.php?s="+txt, "_blank");
+            });
+        });
+    </script>
+        </div>
   </nav>
   <!-- End Menu -->
 
@@ -175,30 +185,29 @@
       <div class="col-lg-2 col-md-4 col-sm-5 col-5 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar"
         style="border-right:2px solid lightgray">
         <ul class="nav flex-column flex-nowrap">
-          <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#">
-              <h3 style="padding-top: 30px; padding-bottom: 20px;">រដ្ឋបាល</h3>
-            </a></li>
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="#submenu1" data-target="#submenu1"
-              data-toggle="collapse">អ្នកប្រើប្រាស់&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a>
-            <div class="collapse" id="submenu1" aria-expanded="false">
-              <ul class="flex-column pl-2 nav">
+              <li class="nav-item"><a class="nav-link text-truncate​ text-dark" href="#"><h3 style="padding-top: 30px; padding-bottom: 20px;">រដ្ឋបាល</h3></a></li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../html/admin.php"><span>បង្កើតគណនីយថ្មី</span></a>
+                    <a class="nav-link collapsed" href="#submenu1" data-target="#submenu1" data-toggle="collapse">អ្នកប្រើប្រាស់&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a>
+                        <div class="collapse" id="submenu1" aria-expanded="false">
+                            <ul class="flex-column pl-2 nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="admin.php" ><span>បង្កើតគណនីយថ្មី</span></a>
+                                </li>
+                                <div class="dropdown-divider"></div>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="user-info.php" ><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
+                                </li>
+                            </ul>
+                        </div>
                 </li>
                 <div class="dropdown-divider"></div>
-                <li class="nav-item">
-                  <a class="nav-link" href="../html/user-info.php"><span>ព័ត៌មានអ្នកប្រើប្រាស់</span></a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <div class="dropdown-divider"></div>
-          <li class="nav-item"><a class="nav-link text-truncate" href="../html/admin-food.php">ម្ហូប</a></li>
-          <div class="dropdown-divider"></div>
-          <li class="nav-item"><a class="nav-link text-truncate" href="#request-conten">ការស្នើសុំ</a></li>
-          <div class="dropdown-divider"></div>
-        </ul>
+                <li class="nav-item"><a class="nav-link text-truncate" href="admin-food.php">ម្ហូប</a></li>
+                <div class="dropdown-divider"></div>
+                <li class="nav-item"><a class="nav-link text-truncate" href="admin-request.php">ការស្នើសុំ</a></li>
+                <div class="dropdown-divider"></div>
+                <li class="nav-item"><a class="nav-link text-truncate" href="dashboard.php">Dashboard</a></li>
+                <div class="dropdown-divider"></div>
+            </ul>
       </div>
       <!-- End-Col-1 -->
 
@@ -302,7 +311,7 @@
   <div class="container-fluid" style="padding:30px; background-color: #043927;"">
         <div class=" row" style="padding-top: 20px; text-align: center;">
     <div class="col-lg-4 col-md-4 col-sm-12 col-12">
-      <img src="../images/foodlogo.png" alt="">
+      <img src="../images/Icon/foodlogo.png" alt="">
       <div class="text-white">QuickCook</div>
     </div>
     <div class="col-lg-4 col-md-4 col-sm-12 col-12">

@@ -57,13 +57,13 @@
       }
 
       //Insert Food Note
-      $foodNote = isset($_POST['txtFoodName']) ? $_POST['txtFoodName'] : '';
+      $foodNote = isset($_POST['txtFoodNote']) ? $_POST['txtFoodNote'] : '';
       $con->query("INSERT INTO tblfoodnote(FoodCode,Note) VALUES('".$foodcode."',N'".$foodNote."')");
 
       //Insert Food information
       $insert = "INSERT INTO tblfood(`FoodCode`,`FoodName`, `Category`, `FoodType`, `Country`, `Province`, `VideoLink`, `FoodImage`, `FoodDate`, 
                                       `UserCode`, `Status`) VALUES('".$foodcode."',N'".$foodname."','".$category."','".$type."','".$country."',N'".$province."',
-                                                                    '".$link."','".$photo."','".$date."','".$usercode."',2)";
+                                                                    '".$link."',N'".$photo."','".$date."','".$usercode."',2)";
       
       move_uploaded_file($_FILES['photo']['tmp_name'],"../images/".$category."/".$_FILES['photo']['name']);
       $con->query($insert);
@@ -148,7 +148,7 @@
                   <a class="dropdown-item" href="drink.php">ភេសជ្ជ:</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item display-none" href="add-food.php" id="dropdownAdd">បន្ថែមមុខម្ហូប</a>
-                  <a class="dropdown-item display-none" href="admin.php" id="dropdownAdmin">រដ្ឋបាល</a>
+                  <a class="dropdown-item display-none" href="dashboard.php" id="dropdownAdmin">រដ្ឋបាល</a>
                   <?php  
                       if($role==0){
                           echo '<script type="text/javascript">
@@ -198,10 +198,20 @@
                     }           
                 ?>               
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2 searchme" type="search" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0 text-white" type="submit">ស្វែងរក</button>
-          </form>
+          <div class="topnav-centered">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2 searchme" type="search" id="txtSearch" placeholder="ឈ្មោះម្ហូបស្វែងរក" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0 text-white" id="btnSearch" type="submit">ស្វែងរក</button>
+                </form>
+            </div>
+            <script>
+        $(document).ready(function () {
+            $("#btnSearch").click(function(){
+                var txt = $("#txtSearch").val();
+                window.open("globalsearch.php?s="+txt, "_blank");
+            });
+        });
+    </script>
         </div>
       </nav>
   <!-- End Menu -->
@@ -420,7 +430,7 @@
 
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-        <textarea class="form-control" id="txtFoodNote" rows="5"
+        <textarea class="form-control" id="txtFoodNote" name="txtFoodNote" rows="5"
           style="resize: none; font-family: KhmerOSbattambang;"></textarea>
       </div>
     </div>
