@@ -13,9 +13,9 @@
     $usercode = $roleSql["UserCode"];
 
     //Select Food Information
-    $foodSql = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");    
+    $foodSql = $con->query("SELECT * FROM `tblfood` WHERE Status != 2 ORDER BY FoodDate DESC");    
       
-    $foodSql1 = $con->query("SELECT * FROM `tblfood` WHERE UserCode = '".$usercode."' ORDER BY FoodDate DESC");   
+    $foodSql1 = $con->query("SELECT * FROM `tblfood` WHERE Status != 2 ORDER BY FoodDate DESC");   
     while($i = $foodSql1->fetch_assoc()){
       $total[] = $i["FoodName"];
     }  
@@ -218,42 +218,99 @@
             <div id="food-content" style="padding-top: 20px;"> 
               <div class="row food-large-title no-gutters">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-                 <select class="form-control" style="font-family: KhmerOSbattambang;">
-                   <option value="User">ទាំងអស់</option>
-                   <option value="Admin">ម្ហូប</option>
-                   <option value="User">បង្អែម</option>
-                   <option value="User">ភេសជ្ជ:</option>
-                 </select>
+                <select class="form-control" style="font-family: KhmerOSbattambang;" id="dropdown-category">
+          <option value="category">ទាំងអស់</option>
+          <option value="food">ម្ហូប</option>
+          <option value="sweet">បង្អែម</option>
+          <option value="drink">ភេសជ្ជ:</option>
+        </select>   
                 </div>
                 
                   <div class="col-lg-3 col-md-3 col-sm-4 col-12">
-                   <select class="form-control" style="font-family: KhmerOSbattambang;">
-                     <option value="User">ទាំងអស់</option>
-                     <option value="User">យល់ព្រម<span style='color: green;'>&nbsp;&#9679;</span></option>
-                     <option value="User">បដិសេធ<span style='color: red;'>&nbsp;&#9679;</span></option>
-                   </select>
+                  <select class="form-control" style="font-family: KhmerOSbattambang;" id="dropdown-status">
+          <option value="status">ទាំងអស់</option>
+          <option value="approve"style='color: green;'>យល់ព្រម<span style='color: green;'>&nbsp;&#9679;</span></option>
+          <option value="reject"style='color: red;'>បដិសេធ<span style='color: red;'>&nbsp;&#9679;</span></option>
+        </select>
                   </div>   
      
                 
                 
             </div>  
+            <script>
+          $(document).ready(function () {
+            var c, s, ca;
+            $("#dropdown-category, #dropdown-status").change(function(){
+              var category = $("#dropdown-category").val();
+              var status = $("#dropdown-status").val();
+
+                if(category=="food"){
+                  c = 1;
+                  ca = "ម្ហូប";
+                }
+                else if(category=="sweet"){
+                  c = 2;
+                  ca = "បង្អែម";
+                }
+                else if(category=="drink"){
+                  c = 3;
+                  ca = "ភេសជ្ជៈ";
+                }
+                else{
+                  c = '';
+                  ca = "ទាំងអស់";
+                }
+
+                if(status=="approve"){
+                  s = 5;
+                }
+                else if(status=="reject"){
+                  s = 6;
+                }
+                else{
+                  s = '';
+                }               
+
+                var all = c + '' + s;
+
+                $.ajax({    //create an ajax request to display.php
+                    type: "GET",
+                    url: "../php/listFoodFilterAdmin.php",             
+                    dataType: "html",  
+                      //expect html to be returned  
+                      data: {filter:''+all},         
+                    success: function(data){                    
+                        $("#viewFood1").html(data); 
+                        // alert(data);
+                    }
+                });
+
+                $.ajax({    //create an ajax request to display.php
+                    type: "GET",
+                    url: "../php/totalListFoodAdmin.php",             
+                    dataType: "html",  
+                      data: {filter:''+all},         
+                    success: function(data){                    
+                        $("#totalFood").html(data); 
+                    }
+                });
+            });
+          });
+        </script>
             
             <!-- Food-all-here -->
             <div class="row" id="viewFood1">
       <?php
         if ($foodSql->num_rows > 0) {         
             while($food = $foodSql->fetch_assoc()) {
-                if($count == 15) break;
-                $count++;
+                // if($count == 15) break;
+                // $count++;
                 //Check Status
-                if($food["Status"]==0){
+                if($food["Status"]==3){
                   $color = "red";
                 }
                 else if($food["Status"]==1){
                   $color = "green";
-                }
-                else if($food["Status"]==2){
-                  $color = "blue";
                 }
 
                 echo '<div class="col-lg-4 col-md-6 col-sm-12 col-12 card foodcard">
@@ -273,7 +330,10 @@
             
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12 total-food">
-                    <p>ចំនួនមុខម្ហូបសរុប៖ 15/300</p>
+                    <p id="totalFood">ចំនួនមុខម្ហូបសរុប៖ <?php
+                      echo  count($total);
+                  ?>
+                  </p>
                 </div>
             </div>
             
@@ -281,21 +341,21 @@
                   <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <nav aria-label="Fodd Page navigation">
                         <ul class="pagination justify-content-center pagination pagination-lg">
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                              <span aria-hidden="true">&laquo;</span>
-                              <span class="sr-only">Previous</span>
-                            </a>
-                          </li>
-                          <li class="page-item"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                              <span aria-hidden="true">&raquo;</span>
-                              <span class="sr-only">Next</span>
-                            </a>
-                          </li>
+                            <!-- <li class="page-item">
+                              <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                              </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                              <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                              </a>
+                            </li> -->
                         </ul>
                       </nav>
                   </div>

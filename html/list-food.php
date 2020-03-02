@@ -203,9 +203,9 @@
       <div class="col-lg-3 col-md-3 col-sm-4 col-12">
         <select class="form-control" style="font-family: KhmerOSbattambang;" id="dropdown-status">
           <option value="status">ទាំងអស់</option>
-          <option value="wait">រងចាំការត្រួតពិនិត្យ<span style='color: green;'>&nbsp;&#9679;</span></option>
-          <option value="approve">យល់ព្រម<span style='color: green;'>&nbsp;&#9679;</span></option>
-          <option value="reject">បដិសេធ<span style='color: red;'>&nbsp;&#9679;</span></option>
+          <option value="wait" style='color: green;'>រងចាំការត្រួតពិនិត្យ<span style='color: green;'>&nbsp;&#9679;</span></option>
+          <option value="approve" style='color: green;'>យល់ព្រម<span style='color: green;'>&nbsp;&#9679;</span></option>
+          <option value="reject" style='color: red;'>បដិសេធ<span style='color: red;'>&nbsp;&#9679;</span></option>
         </select>
       </div>
       <script>
