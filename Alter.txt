@@ -1,7 +1,0 @@
-ALTER VIEW vUserFood
-AS 
-SELECT f.FoodCode, f.FoodName, f.Category,CONCAT(u.LastName, ' ', u.FirstName) AS FullName, u.UserImage, f.FoodImage, f.FoodDate
-FROM tblfood AS f
-INNER JOIN tbluser AS u
-ON f.UserCode = u.UserCode
-WHERE f.Status = 1 
