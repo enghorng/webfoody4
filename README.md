@@ -11,3 +11,5 @@ Guide for access our website "Quick Cook"
 4. Users
     Admin : admin@gmail.com     Password: 123
     Member: member@gmail.com    Password: 123
+
+*Note: Book and Silde in folder "Documents" 
