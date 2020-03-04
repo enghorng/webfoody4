@@ -195,7 +195,7 @@
           <a class="nav-link text-white display-none" href="login.php" id="navLogout">ចាកចេញ</a>
         </li>
         <li class="nav-item ab">
-          <a class="nav-link text-white display-none" href="html/admin-edit-user.php?id=<?php echo $usercode ?>" id="navUser">អ្នកប្រើប្រាស់</a>
+          <a class="nav-link text-white display-none" href="admin-edit-user.php?id=<?php echo $usercode ?>" id="navUser">អ្នកប្រើប្រាស់</a>
         </li>
         <?php
                     if($role==0){

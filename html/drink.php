@@ -8,7 +8,7 @@
     $roleSql = $sql->fetch_assoc();
     $role = $roleSql["Role"];
     $name = $roleSql["FirstName"];
-    $code = $roleSql["UserCode"]
+    $code = $roleSql["UserCode"];
 
     //Select Food Information
     $foodSql = $con->query("SELECT * FROM `vuserfood` WHERE Category = 'Drink' ORDER BY FoodDate DESC");    
@@ -121,7 +121,7 @@
                     <a class="nav-link text-white display-none" href="login.php" id="navLogout">ចាកចេញ</a>
                 </li>
                 <li class="nav-item ab">
-                    <a class="nav-link text-white display-none" href="html/admin-edit-user.php?id=<?php echo $code ?>" id="navUser">អ្នកប្រើប្រាស់</a>
+                    <a class="nav-link text-white display-none" href="admin-edit-user.php?id=<?php echo $code ?>" id="navUser">អ្នកប្រើប្រាស់</a>
                 </li>
                 <?php
                     if($role==0){
