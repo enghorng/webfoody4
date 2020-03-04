@@ -13,3 +13,10 @@ Guide for access our website "Quick Cook"
     Member: member@gmail.com    Password: 123
 
 *Note: Book and Silde in folder "Documents" 
+
+
+Group Members (Class SLS Year4 Generation20):
+1. Lean Enghorng
+2. Rin Sopheary
+3. Roun SreyLeap
+4. Khoun Senghak
